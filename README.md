@@ -22,6 +22,38 @@ $ npx create-react-app mystore_web
 ### Entrando no diretório
 $ cd mystore_app
 
+#Instala o gerenciador de rotas.
+$ npm install --save react-router-dom
+
+#Instala o gerenciador de histórico de navegação.
+$ npm install --save history
+
+# Material-UI a biblioteca de componentes React UI: https://material-ui.com/pt/
+$ npm install --save @material-ui/core
+
+# Instalar a biblioteca de icones
+$ npm install --save @material-ui/icons
+
+# Componentes de gráficos
+$ npm install --save  react-google-charts
+
+# Redux compartilha estados entre componentes
+$ npm install --save redux react-redux redux-thunk
+
+# Realizar chamada para API
+$ npm install --save axios
+
+# Manipular datas
+$ npm install --save date-fns
+
+# Validar o e-mail
+$ npm install --save validator
+
+#Gráficos do googgle
+
+# Rodar o projeto
+$ npm start
+
 ### Executando
 $ npm start
 
