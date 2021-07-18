@@ -10,20 +10,20 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
 A criação e a execução do projeto foram realizadas seguindo a documentação oficial
-[React Native](https://reactnative.dev/docs/environment-setup).
+[React JS](https://reactjs.org/docs/create-a-new-react-app.html).
 
 ## 🚀 Como o projeto foi desenvolvido
 
 ```bash
 
 ### Criando o Projeto
-$ npx react-native init mystore_app
+$ npx create-react-app mystore_web
 
-### Executando o Metro Bundle
-$ npx react-native start
+### Entrando no diretório
+$ cd mystore_app
 
-### Executando projeto no Android
-$ npx react-native run-android
+### Executando
+$ npm start
 
 ```
 
@@ -32,14 +32,16 @@ $ npx react-native run-android
 ```bash
 
 ### Baixando o projeto
-$ https://github.com/tcc-mystore/mystore_app.git
+$ https://github.com/tcc-mystore/mystore_web.git
 
 ### Entrando no diretótio
-$ cd mysrore_app
+$ cd mysrore_web
 
 ### Instalando as dependências
 $ npm install
 
+### Executando
+$ npm start
 
 ```
 
