@@ -49,8 +49,6 @@ $ npm install --save date-fns
 # Validar o e-mail
 $ npm install --save validator
 
-#Gráficos do googgle
-
 # Rodar o projeto
 $ npm start
 
