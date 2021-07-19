@@ -1,62 +1,59 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Link from '@material-ui/core/Link';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+//import Logo from '../../../assets/images/logo.png';
 
-const drawerWidth = 0;
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="https://paulistense.com.br/">
+                Paulistense TI
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
 
 const useStyles = makeStyles((theme) => ({
-    root: {
+    paper: {
+        marginTop: theme.spacing(8),
         display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
     },
-    drawer: {
-        [theme.breakpoints.up('sm')]: {
-            width: drawerWidth,
-            flexShrink: 0,
-        },
+    avatar: {
+        margin: theme.spacing(0),
     },
-    appBar: {
-        [theme.breakpoints.up('sm')]: {
-            width: `calc(100% - ${drawerWidth}px)`,
-            marginLeft: drawerWidth,
-        },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(0),
     },
-    menuButton: {
-        marginRight: theme.spacing(2),
-        [theme.breakpoints.up('sm')]: {
-            display: 'none',
-        },
-    },
-    // necessary for content to be below app bar
-    toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-        width: drawerWidth,
-    },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
+    submit: {
+        margin: theme.spacing(3, 0, 2),
     },
 }));
 
 const UnauthenticatedChildren = (props) => {
     const classes = useStyles();
+
     return (
-        <div className={classes.root}>
-            <CssBaseline />       
-            <main className={classes.content}>
-                <div className={classes.toolbar} />
+        <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+                {/* <img src={Logo} alt="Logo" className={classes.avatar}/> */}
                 {props.children}
-            </main>
-        </div>
+            </div>
+            <Box mt={8}>
+                <Copyright />
+            </Box>
+        </Container>
     );
 }
-
-UnauthenticatedChildren.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    window: PropTypes.func,
-};
 
 export default UnauthenticatedChildren;
