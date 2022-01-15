@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-//import Logo from '../../../assets/images/logo.png';
+import logo from '../../../assets/images/logo.png';
 
 function Copyright() {
     return (
@@ -46,7 +46,7 @@ const UnauthenticatedChildren = (props) => {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                {/* <img src={Logo} alt="Logo" className={classes.avatar}/> */}
+                <img src={logo} className="App-logo" alt="logo" />
                 {props.children}
             </div>
             <Box mt={8}>
