@@ -46,10 +46,9 @@ const CriarConta = () => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    //color="primary"
                     className={classes.submit}
                 >
-                    <Link to="/" variant="body2">
+                    <Link to="/mystore/" variant="body2">
                         Criar Conta
                     </Link>
                 </Button>

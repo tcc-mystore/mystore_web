@@ -39,10 +39,9 @@ const RecuperarSenha = () => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    //color="primary"
                     className={classes.submit}
                 >
-                    <Link to="/" variant="body2">
+                    <Link to="/mystore/" variant="body2">
                         Recuperar Senha
                     </Link>
                 </Button>
