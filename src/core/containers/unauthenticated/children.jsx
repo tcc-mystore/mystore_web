@@ -46,7 +46,7 @@ const UnauthenticatedChildren = (props) => {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <img src={logo} className="App-logo" alt="logo" />
+                <img src={logo} alt="logo" />
                 {props.children}
             </div>
             <Box mt={8}>

@@ -61,6 +61,7 @@ const AuthenticatedChildren = (props) => {
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
+
     const drawer = (
         <div>
             <div className={classes.toolbar} />
@@ -84,6 +85,7 @@ const AuthenticatedChildren = (props) => {
             </List>
         </div>
     );
+    
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
