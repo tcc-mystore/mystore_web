@@ -13,10 +13,10 @@ const AuthenticatedChildren = (props) => {
                 <div className="p-col-12">
                     <BarraDeFerramentas handleLogout={props.children.props.handleLogout} dadosUsuario={props.children.props.usuario}/>
                 </div>
-                <div className="p-col-3">
+                <div className="p-col-2">
                     <BarraDeMenu />
                 </div>
-                <div className="p-col-9">
+                <div className="p-col-10">
                     <main>
                         {props.children}
                     </main>
