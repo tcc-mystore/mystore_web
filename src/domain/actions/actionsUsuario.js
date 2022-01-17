@@ -77,7 +77,6 @@ export const ativarUsuario = (dadosUsuario, callback) => {
 
 export const getPerfil = (callback) => {
     return (dispatch) => {
-        console.log("Salvando token getPerfil");
         if (buscarToken()) {
             axios.get(`${url}/v1/usuarios/perfil`, headers())
                 .then((response) => {
