@@ -37,7 +37,14 @@ const Login = (props) => {
         });
     }
 
-    useEffect(() => { }, [alerta, mensagem])
+    useEffect(() => {
+        const { location } = props;
+
+        if (location.state) {
+            setAlerta(location.state.alerta);
+            setMensagem(location.state.mensagem);
+        }// eslint-disable-next-line
+    }, [alerta, mensagem])
 
     return (
         <>
