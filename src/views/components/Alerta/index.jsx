@@ -11,7 +11,7 @@ const AlertaAtencao = (props) => {
             case 'success':
                 tipo = 'Sucesso!';
                 break;
-            case 'warning':
+            case 'warn':
                 tipo = 'Atênção!';
                 break;
             case 'error':

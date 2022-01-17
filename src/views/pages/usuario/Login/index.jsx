@@ -4,6 +4,8 @@ import Alerta from '../../../components/Alerta';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = (props) => {
 
@@ -23,7 +25,7 @@ const Login = (props) => {
                     setMensagem(retorno.erro.mensagem);
                 }
                 if (retorno.erro.status === 401) {
-                    setAlerta("warning");
+                    setAlerta("warn");
                     setMensagem("Acesso negado ou dados incorretos!");
                 }
                 setAguardando(false);
@@ -35,11 +37,13 @@ const Login = (props) => {
         });
     }
 
+    useEffect(() => { }, [alerta, mensagem])
+
     return (
         <>
-            <Alerta tipoAlerta={alerta} mensagem={mensagem} />
+            {mensagem ? <Alerta tipoAlerta={alerta} mensagem={mensagem} /> : null}
             <ModalCarregando aguardando={aguardando} pagina="Entrando no sistema" />
-            <h5 className="p-text-center">Login</h5>
+            <h3 className="p-text-center">Login</h3>
             <form noValidate onSubmit={logar} className="p-fluid">
                 <div className="p-d-flex p-jc-center">
                     <div className="card">
@@ -70,7 +74,13 @@ const Login = (props) => {
                                 <label htmlFor="password" className='password'>Password*</label>
                             </span>
                         </div>
-                        <Button type="submit" label="Entrar" icon="pi pi-unlock" className='p-mt-2' iconPos="left" />
+                        <div className='p-mt-1'>
+                            <Button type="submit" label="Entrar" icon="pi pi-unlock" className='p-mt-2' iconPos="left" />
+                        </div>
+                        <div className='p-d-flex p-jc-between p-mt-1'>
+                            <Link to="/mystore/recuperar-senha" className="p-mb-2">Recuperar senha</Link>
+                            <Link to="/mystore/criar-conta" className="p-mb-2">Criar conta</Link>
+                        </div>
                     </div>
                 </div>
             </form>
