@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import CloseIcon from '@material-ui/icons/Close';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import IconButton from '@material-ui/core/IconButton';
+import React, { useRef, useEffect } from 'react';
+import { Messages } from 'primereact/messages';
 
 const AlertaAtencao = (props) => {
 
-    const [open, setOpen] = useState(true);
+    const mensagem = useRef(null);
 
     const tipoAlerta = () => {
         let tipo = '';
@@ -29,31 +27,18 @@ const AlertaAtencao = (props) => {
         return tipo;
     }
 
+    useEffect(() => {
+        props.tipoAlerta && mensagem.current.show({ 
+            severity: props.tipoAlerta, 
+            summary: <div>{tipoAlerta(props.tipoAlerta)}</div>, 
+            detail: <div>{props.mensagem}</div>, 
+            sticky: true });
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+
     return (
         <>
-            {
-                open && tipoAlerta(props.tipoAlerta) ?
-                    <Alert
-                        severity={props.tipoAlerta}
-                        action={
-                            <IconButton
-                                aria-label="close"
-                                color="inherit"
-                                size="small"
-                                onClick={() => {
-                                    setOpen(false);
-                                }}>
-                                <CloseIcon fontSize="inherit" />
-                            </IconButton>
-                        }
-                    >
-                        <AlertTitle>{tipoAlerta(props.tipoAlerta)}</AlertTitle>
-                        {props.mensagem}
-                        <strong>{props.causa}</strong>
-                    </Alert>
-                    :
-                    null
-            }
+            <Messages ref={mensagem} />
         </>
     )
 }

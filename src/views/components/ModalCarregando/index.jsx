@@ -1,5 +1,5 @@
 import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { ProgressSpinner } from 'primereact/progressspinner';
 import './index.css';
 
 const ModalCarregando = (props) => {
@@ -9,32 +9,33 @@ const ModalCarregando = (props) => {
                 <div className="carregamento">
                     <main className="conteudo">
                         <div className="subconteudo">
-                            <CircularProgress
-                                color="inherit"
+                            <ProgressSpinner
+                                strokeWidth="8"
                                 style={
                                     {
-                                        width: '5rem', height: '5rem', 
+                                        width: '5rem', height: '5rem',
                                         color: '#FFF'
                                     }
-                                } />
+                                }
+                            />
                         </div>
                         <div className="subconteudo">
                             <h1 style={
-                                    {
+                                {
                                     //    width: '5rem', height: '5rem', 
-                                        color: '#FFF'
-                                    }
-                                } >
+                                    color: '#FFF'
+                                }
+                            } >
                                 Carregando...
-                        </h1>
+                            </h1>
                         </div>
                         <div className="subconteudo">
                             <h3 style={
-                                    {
+                                {
                                     //    width: '5rem', height: '5rem', 
-                                        color: '#FFF'
-                                    }
-                                }>
+                                    color: '#FFF'
+                                }
+                            }>
                                 {props.pagina}
                             </h3>
                         </div>
