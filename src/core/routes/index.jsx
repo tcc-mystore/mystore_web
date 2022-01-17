@@ -10,6 +10,7 @@ import CriarConta from '../../views/pages/usuario/CriarConta';
 import RecuperarSenha from '../../views/pages/usuario/RecuperarSenha';
 import PaginaInexistente from '../../views/pages/mystore/PaginaInexistente';
 import PaginaInicial from '../../views/pages/mystore/PaginaInicial';
+import ListarPermissoes from '../../views/pages/permissao/Listar';
 
 const Routes = () => {
     return (
@@ -23,6 +24,7 @@ const Routes = () => {
                         <Route path="/mystore/recuperar-senha" exact component={Unauthenticated(RecuperarSenha)} />
                         {/* Páginas com autenticação */}
                         <Route path="/mystore/pagina-inicial" exact component={Authenticated(PaginaInicial)} />
+                        <Route path="/mystore/listar-permissoes" exact component={Authenticated(ListarPermissoes)} />
                         {/* Qualquer página que não esteja dentro das rotas especificadas */}
                         <Route path="/mystore/pagina-inexistente" exact component={PaginaInexistente} />
                         <Redirect from="*" to="/mystore/pagina-inexistente" />
