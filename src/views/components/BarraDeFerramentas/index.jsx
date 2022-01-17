@@ -1,5 +1,5 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Menubar } from 'primereact/menubar';
 import logo from '../../../assets/images/logo.png'
 import { Button } from 'primereact/button';
@@ -8,6 +8,7 @@ import { Avatar } from 'primereact/avatar';
 import { Link, Redirect } from 'react-router-dom';
 
 const BarraDeFerramentas = ({ handleLogout, dadosUsuario }) => {
+    const [irPara, setIrPara] = useState(null);
     const menu = useRef(null);
     const items = [
         {
@@ -26,24 +27,29 @@ const BarraDeFerramentas = ({ handleLogout, dadosUsuario }) => {
         return <Link to='/mystore/usuario/perfil' />
     }
 
-    return (
-        <>
-            {console.log('dadosUsuario')}
-            {console.log(dadosUsuario)}
-            <div>
-                <div className="card">
-                    <TieredMenu model={items} popup ref={menu} id="overlay_tmenu" />
-                    <Menubar
-                        start={
-                            <Avatar className="p-overlay-badge" image={logo} size="xlarge" onClick={() => <Redirect to="/mystore/pagina-inicial" />} />
-                        }
-                        end={<Button label={dadosUsuario ? dadosUsuario.nome_completo : "Usuário"} icon="pi pi-bars" onClick={(event) => menu.current.toggle(event)}
-                            aria-haspopup aria-controls="overlay_tmenu" />}
-                    />
+    if (irPara) {
+        return <Redirect to={{ pathname: `/mystore/${irPara}` }} />
+    } else {
+        return (
+            <>
+                {console.log('dadosUsuario')}
+                {console.log(dadosUsuario)}
+                <div>
+                    <div className="card">
+                        <TieredMenu model={items} popup ref={menu} id="overlay_tmenu" />
+                        <Menubar
+                            start={
+                                <Avatar className="p-overlay-badge" image={logo} size="xlarge" onClick={() => setIrPara(`pagina-inicial`)} />
+                            }
+                            end={<Button label={dadosUsuario ? dadosUsuario.nome_completo : "Usuário"} icon="pi pi-bars" onClick={(event) => menu.current.toggle(event)}
+                                aria-haspopup aria-controls="overlay_tmenu" />}
+                        />
+                    </div>
                 </div>
-            </div>
-        </>
-    );
+            </>
+        );
+    }
+
 }
 
 export default BarraDeFerramentas;

@@ -1,9 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Menu } from 'primereact/menu';
 import { Toast } from 'primereact/toast';
+import { Redirect } from 'react-router-dom';
 
 const BarraDeMenu = () => {
     const toast = useRef(null);
+    const [irPara, setIrPara] = useState(null);
     const items = [
         {
             label: 'Painel de Controle',
@@ -19,21 +21,28 @@ const BarraDeMenu = () => {
                     label: 'Permissões',
                     icon: 'pi pi-lock',
                     command: () => {
-                        toast.current.show({ severity: 'warn', summary: 'Permissões', detail: 'Visualizar as permissões disponíveis no sistema!', life: 3000 });
+                        setIrPara(`listar-permissoes`);
                     }
                 }
             ]
         },
     ];
 
-    return (
-        <div>
-            <Toast ref={toast}></Toast>
-            <div className="card">
-                <Menu model={items} />
-            </div>
-        </div>
-    );
+    if (irPara) {
+        return <Redirect to={{ pathname: `/mystore/${irPara}` }} />
+    } else {
+        return (
+            <>
+                <div>
+                    <Toast ref={toast}></Toast>
+                    <div className="card">
+                        <Menu model={items} />
+                    </div>
+                </div>
+            </>
+        );
+    }
+
 }
 
 export default BarraDeMenu;
