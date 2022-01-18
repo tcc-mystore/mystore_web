@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { encode } from 'base-64';
+import { pass, pass_manager, url, user, user_manager } from '.././config';
 
 const api = (token) => {
     try {
@@ -18,7 +19,7 @@ const api = (token) => {
 const authorizationServerLogin = async (email, senha) => {
     try {
         return await axios.create({
-            baseURL: úrl,
+            baseURL: url,
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Basic ${encode(`${user}:${pass}`)}`,
@@ -32,7 +33,7 @@ const authorizationServerLogin = async (email, senha) => {
             return response.data;
         }).catch((error) => {
             console.log(`Não foi possível gerar o token de acesso!`);
-            console.log(JSON.stringify(úrl))
+            console.log(JSON.stringify(url))
             if (error.response) {
                 return {
                     codigo: error.response.status,
@@ -55,7 +56,7 @@ const authorizationServerLogin = async (email, senha) => {
 const authorizationServerRecuperarSenha = async () => {
     try {
         return await axios.create({
-            baseURL: Config.MY_URL,
+            baseURL: url,
             headers: { 
                 'Authorization': `Basic ${encode(`${user_manager}:${pass_manager}`)}`, 
                 'Content-Type': 'application/x-www-form-urlencoded' 

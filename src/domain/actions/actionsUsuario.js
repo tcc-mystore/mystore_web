@@ -8,10 +8,11 @@ import {
     LOGOUT_USUARIO,
     PESQUISAR_USUARIOS
 } from '../../core/store/types';
-import { pass, url, user } from '../../core/config';
+import { pass, pass_manager, url, user, user_manager } from '../../core/config';
 import { salvarToken, buscarToken, headers, removerToken } from '../../core/store/localStorage';
 import errorHandler from '../../core/store/errorHandler';
 import { encode } from 'base-64';
+import { authorizationServerLogin } from '../../core/api';
 
 export const alterarFotoPerfil = (dadosUsuario, callback) => {
     return (dispatch) => {
@@ -216,21 +217,22 @@ export const validacaoRecuperarSenha = (recuperarSenha, callback) => {
     }
 }
 
-export const testeAction = () => {
+export const tokenCadastrarOuRecuperar = (callback) => {
+    console.log('tokenCadastrarOuRecuperar');
     return (dispatch) => {
-        console.log('Testando a action usuário');
+        axios.create({
+            baseURL: url,
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Basic ${encode(`${user_manager}:${pass_manager}`)}`,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        }).post(
+            '/oauth/token',
+            `grant_type=client_credentials`,
+        ).then((response) => {
+            callback({ payload: response.data });
+        })
+            .catch((err) => callback(errorHandler(err)));
     }
 }
-// export const usuariosPesquisar = (usuarioFiltro, callback) => {
-//     return (dispatch) => {
-//         axios.get(`${url}/v1/v1/usuarios/listar`, headers())
-//         .then((response) => {
-//             //Testes
-//             console.log(JSON.stringify(usuarioFiltro));
-//                 dispatch({ type: USUARIO_ENTRAR, payload: response.data })
-//             })
-//             .catch((err) => {
-//                 callback(errorHandler(err));
-//             });
-//     }
-// }

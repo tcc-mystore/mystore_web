@@ -15,7 +15,8 @@ const RecuperarSenha = (props) => {
 
     const trocarSenha = () => {
         setAguardando(true);
-        props.handleLogin({ email }, (retorno) => {
+        props.tokenCadastrarOuRecuperar((retorno) => {
+            console.log(retorno);
             if (retorno.erro) {
                 if (retorno.erro.mensagem) {
                     setAlerta("error");
