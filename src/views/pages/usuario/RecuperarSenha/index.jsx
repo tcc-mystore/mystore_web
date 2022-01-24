@@ -4,6 +4,8 @@ import Alerta from '../../../components/Alerta';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../../../domain/actions';
 
 const RecuperarSenha = (props) => {
 
@@ -12,27 +14,28 @@ const RecuperarSenha = (props) => {
     const [email, setEmail] = useState("paulistensetecnologia@gmail.com");
     const [alerta, setAlerta] = useState("");
     const [mensagem, setMensagem] = useState("");
+    const [pagina, setPagina] = useState("Solicitando recuperação de senha.");
 
     const trocarSenha = () => {
         setAguardando(true);
-        props.tokenCadastrarOuRecuperar((retorno) => {
-            console.log(retorno);
-            if (retorno.erro) {
+        props.recuperarSenha({ email }, (retorno) => {
+            // eslint-disable-next-line 
+            var erro = new String(retorno.erro.detalhes);
+            if (retorno.erro && !erro.includes("Error: Actions must be plain objects.")) {
+                setPagina("Erro na conexão do sistema com o servidor.");
                 if (retorno.erro.mensagem) {
                     setAlerta("error");
                     setMensagem(retorno.erro.mensagem);
+                    setAguardando(false);
                 }
-                if (retorno.erro.status === 401) {
-                    setAlerta("warn");
-                    setMensagem("Acesso negado ou dados incorretos!");
-                }
-                setAguardando(false);
             } else {
-                setAlerta("");
-                setMensagem("");
+                setAlerta("success");
+                setMensagem("Você receberá um email com o código de validação da nova senha!");
                 setAguardando(false);
+                setVoltar(true);
             }
-        });
+        }
+        );
     }
 
     const cancelar = () => {
@@ -53,7 +56,7 @@ const RecuperarSenha = (props) => {
     }
 
     if (aguardando)
-        return <ModalCarregando aguardando={aguardando} pagina="Solicitando recuperação de senha." />
+        return <ModalCarregando aguardando={aguardando} pagina={pagina} />
     else
         return (
             <>
@@ -83,4 +86,9 @@ const RecuperarSenha = (props) => {
             </>
         );
 }
-export default RecuperarSenha;
+
+const mapStateToProps = state => ({
+    aplicacao: state.aplicacao
+});
+
+export default connect(mapStateToProps, actions)(RecuperarSenha);

@@ -1,18 +1,10 @@
 import axios from 'axios';
-import {
-    BUSCAR_USUARIO,
-    LIMPAR_USUARIO,
-    LIMPAR_USUARIOS,
-    LISTAR_USUARIOS,
-    LOGIN_USUARIO,
-    LOGOUT_USUARIO,
-    PESQUISAR_USUARIOS
-} from '../../core/store/types';
-import { pass, pass_manager, url, user, user_manager } from '../../core/config';
+import { BUSCAR_USUARIO, LIMPAR_USUARIO, LISTAR_USUARIOS, LIMPAR_USUARIOS, LOGIN_USUARIO, LOGOUT_USUARIO, PESQUISAR_USUARIOS } from '../../core/store/types';
+import { pass, url, user } from '../../core/config';
 import { salvarToken, buscarToken, headers, removerToken } from '../../core/store/localStorage';
 import errorHandler from '../../core/store/errorHandler';
 import { encode } from 'base-64';
-import { authorizationServerLogin } from '../../core/api';
+import { api, authorizationServerRecuperarSenha } from '../../core/api';
 
 export const alterarFotoPerfil = (dadosUsuario, callback) => {
     return (dispatch) => {
@@ -79,7 +71,8 @@ export const ativarUsuario = (dadosUsuario, callback) => {
 export const getPerfil = (callback) => {
     return (dispatch) => {
         if (buscarToken()) {
-            axios.get(`${url}/v1/usuarios/perfil`, headers())
+            api(buscarToken())
+                .get(`${url}/v1/usuarios/perfil`)
                 .then((response) => {
                     //salvarToken(response.data);
                     dispatch({ type: LOGIN_USUARIO, payload: response.data })
@@ -180,11 +173,20 @@ export const recarregaPerfil = (callback) => {
 
 export const recuperarSenha = (dadosUsuario, callback) => {
     return (dispatch) => {
-        axios.put(`${url}/v1/usuarios/recuperar-senha`, dadosUsuario)
+        authorizationServerRecuperarSenha()
+            .post(
+                '/oauth/token',
+                `grant_type=client_credentials`,
+            )
             .then((response) => {
-                callback({ erro: response.data });
+                api(response.data.access_token).get(`/v1/usuarios/${dadosUsuario.email}/codigo-acesso`)
+                    .then(
+                        (response) => dispatch(response.data))
+                    .catch(
+                        (error) => callback(errorHandler(error))
+                    );
             })
-            .catch((err) => callback(errorHandler(err)));
+            .catch((callbackError) => callback(errorHandler(callbackError)));
     }
 }
 
@@ -213,26 +215,6 @@ export const validacaoRecuperarSenha = (recuperarSenha, callback) => {
             .then((response) => {
                 callback({ erro: response.data });
             })
-            .catch((err) => callback(errorHandler(err)));
-    }
-}
-
-export const tokenCadastrarOuRecuperar = (callback) => {
-    console.log('tokenCadastrarOuRecuperar');
-    return (dispatch) => {
-        axios.create({
-            baseURL: url,
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': `Basic ${encode(`${user_manager}:${pass_manager}`)}`,
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }
-        }).post(
-            '/oauth/token',
-            `grant_type=client_credentials`,
-        ).then((response) => {
-            callback({ payload: response.data });
-        })
             .catch((err) => callback(errorHandler(err)));
     }
 }

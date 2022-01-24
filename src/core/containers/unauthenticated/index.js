@@ -1,11 +1,11 @@
 import React from 'react';
 import UnauthenticatedChildren from './children';
 import { connect } from 'react-redux';
-import * as actionsUsuario from '../../../domain/actions/actionsUsuario';
+import * as actions from '../../../domain/actions';
 import { Redirect } from 'react-router-dom';
 
 const ContainerAuthenticated = Component => {
-    
+
     class ComponentAuthenticated extends React.Component {
 
         state = { erro: false }
@@ -43,10 +43,10 @@ const ContainerAuthenticated = Component => {
 
     const mapStateToProps = state => ({
         authorized: state.usuario.authorized,
-        usuario: state.usuario.usuarioLogado
+        usuarioLogado: state.usuario.usuarioLogado
     });
 
-    return connect(mapStateToProps, actionsUsuario)(ComponentAuthenticated);
+    return connect(mapStateToProps, actions)(ComponentAuthenticated);
 }
 
 export default ContainerAuthenticated;
