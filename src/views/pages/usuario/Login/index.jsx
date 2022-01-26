@@ -45,7 +45,7 @@ const Login = (props) => {
             setAlerta(location.state.alerta);
             setMensagem(location.state.mensagem);
         }// eslint-disable-next-line
-    },[])
+    }, [])
 
     if (aguardando)
         return <ModalCarregando aguardando={aguardando} pagina="Entrando no sistema" />
@@ -54,42 +54,40 @@ const Login = (props) => {
             <>
                 {mensagem ? <Alerta tipoAlerta={alerta} mensagem={mensagem} /> : null}
                 <h3 className="p-text-center">Login</h3>
-                <form noValidate onSubmit={logar} className="p-fluid p-d-flex p-jc-center">
-                        <div className="card">
-                            <div className="p-field p-mt-1">
-                                <span className="p-float-label p-input-icon-right">
-                                    <i className="pi pi-envelope" />
-                                    <InputText
-                                        id="email"
-                                        name="email"
-                                        value={email}
-                                        onChange={(ev) => setEmail(ev.target.value)}
-                                        className='email'
-                                    />
-                                    <label htmlFor="email" className='email'>Email*</label>
-                                </span>
-                            </div>
-                            <br />
-                            <div className="p-field">
-                                <span className="p-float-label">
-                                    <Password
-                                        id="password"
-                                        name="password"
-                                        value={senha}
-                                        onChange={(ev) => setSenha(ev.target.value)}
-                                        className='password'
-                                        toggleMask
-                                    />
-                                    <label htmlFor="password" className='password'>Senha*</label>
-                                </span>
-                            </div>
-                            <div className='p-mt-1'>
-                                <Button type="submit" label="Entrar" icon="pi pi-unlock" className='p-mt-2' iconPos="left" />
-                            </div>
-                            <div className='p-d-flex p-jc-between p-mt-1'>
-                                <Link to="/mystore/recuperar-senha" className="p-mb-2" style={{ textDecoration: 'none' }}>Recuperar senha</Link>
-                                <Link to="/mystore/criar-conta" className="p-mb-2" style={{ textDecoration: 'none' }}>Criar conta</Link>
-                            </div>
+                <form noValidate onSubmit={logar}>
+                    <div className="p-field p-mt-1">
+                        <span className="p-float-label p-input-icon-right">
+                            <i className="pi pi-envelope" />
+                            <InputText
+                                id="email"
+                                name="email"
+                                value={email}
+                                onChange={(ev) => setEmail(ev.target.value)}
+                                className='email'
+                            />
+                            <label htmlFor="email" className='email'>Email*</label>
+                        </span>
+                    </div>
+                    <br />
+                    <div className="p-field">
+                        <span className="p-float-label">
+                            <Password
+                                id="password"
+                                name="password"
+                                value={senha}
+                                onChange={(ev) => setSenha(ev.target.value)}
+                                className='password'
+                                toggleMask
+                            />
+                            <label htmlFor="password" className='password'>Senha*</label>
+                        </span>
+                    </div>
+                    <div className='p-mt-1'>
+                        <Button type="submit" label="Entrar" icon="pi pi-unlock" className='p-mt-2' iconPos="left" />
+                    </div>
+                    <div className='p-d-flex p-jc-between p-mt-1'>
+                        <Link to="/mystore/recuperar-senha" className="p-mb-2" style={{ textDecoration: 'none' }}>Recuperar senha</Link>
+                        <Link to="/mystore/criar-conta" className="p-mb-2" style={{ textDecoration: 'none' }}>Criar conta</Link>
                     </div>
                 </form>
             </>
