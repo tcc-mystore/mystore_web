@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { BUSCAR_USUARIO, LIMPAR_USUARIO, LISTAR_USUARIOS, LIMPAR_USUARIOS, LOGIN_USUARIO, LOGOUT_USUARIO, PESQUISAR_USUARIOS } from '../../core/store/types';
-import { pass, url, user } from '../../core/config';
+import { url } from '../../core/config';
 import { salvarToken, buscarToken, headers, removerToken } from '../../core/store/localStorage';
 import errorHandler from '../../core/store/errorHandler';
-import { encode } from 'base-64';
-import { api, authorizationServerRecuperarSenha } from '../../core/api';
+import { api, authorizationServerLogin, authorizationServerRecuperarSenha } from '../../core/api';
 
 export const alterarFotoPerfil = (dadosUsuario, callback) => {
     return (dispatch) => {
@@ -110,21 +109,16 @@ export const getUsuarios = () => {
 }
 
 export const handleLogin = ({ email, senha }, callback) => {
+    console.log(`ops`)
     return (dispatch) => {
-        axios.create({
-            baseURL: url,
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': `Basic ${encode(`${user}:${pass}`)}`,
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }
-        }).post(
-            '/oauth/token',
-            `username=${email}&password=${senha}&grant_type=password`,
-        )
+        authorizationServerLogin()
+            .post(
+                '/oauth/token',
+                `username=${email}&password=${senha}&grant_type=password`,
+            )
             .then((response) => {
                 salvarToken(response.data.access_token);
-                dispatch({ type: LOGIN_USUARIO, payload: { usuario: response.data } })
+                dispatch({ type: LOGIN_USUARIO, payload: { usuarioLogado: response.data } })
             })
             .catch((callbackError) => callback(errorHandler(callbackError)));
     }
@@ -179,7 +173,8 @@ export const recuperarSenha = (dadosUsuario, callback) => {
                 `grant_type=client_credentials`,
             )
             .then((response) => {
-                api(response.data.access_token).get(`/v1/usuarios/${dadosUsuario.email}/codigo-acesso`)
+                api(response.data.access_token)
+                    .get(`/v1/usuarios/${dadosUsuario.email}/codigo-acesso`)
                     .then(
                         (response) => dispatch(response.data))
                     .catch(

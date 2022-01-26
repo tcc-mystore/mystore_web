@@ -26,7 +26,7 @@ const reducersUsuario = (state = {}, action) => {
         case LOGIN_USUARIO:
             return {
                 ...state,
-                usuarioLogado: action.payload.usuario,
+                usuarioLogado: action.payload.usuarioLogado,
                 authorized: true
             }
         case LOGOUT_USUARIO:
