@@ -204,12 +204,21 @@ export const salvarUsuario = (dadosUsuario, callback) => {
     }
 }
 
-export const validacaoRecuperarSenha = (recuperarSenha, callback) => {
+export const validacaoRecuperarSenha = (dadosUsuario, callback) => {
     return (dispatch) => {
-        axios.get(`${url}/v1/usuarios/recuperar-senha/${recuperarSenha}`,)
+        authorizationServerRecuperarSenha()
+            .post(
+                '/oauth/token',
+                `grant_type=client_credentials`,
+            )
             .then((response) => {
-                callback({ erro: response.data });
+                api(buscarToken())
+                    .put(`/v1/usuarios/cadastrar-senha`, dadosUsuario)
+                    .then((response) => {
+                        callback({ usuarioRecuperado: response.data });
+                    })
+                    .catch((err) => callback(errorHandler(err)));
             })
-            .catch((err) => callback(errorHandler(err)));
+            .catch((callbackError) => callback(errorHandler(callbackError)));
     }
 }

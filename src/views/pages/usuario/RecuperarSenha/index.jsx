@@ -76,7 +76,7 @@ const RecuperarSenha = (props) => {
                     </span>
                 </div>
                 <div className='p-d-flex p-jc-between p-mt-1'>
-                    <Button label="Recuperar" icon="pi pi-send" className='p-mr-1' iconPos="left" onClick={() => trocarSenha()} />
+                    <Button label="Recuperar" icon="pi pi-send" className='p-mr-1' iconPos="left" onClick={() => trocarSenha()} disabled={!email} />
                     <Button label="Cancelar" icon="pi pi-ban" className='p-ml-1 p-button-danger' iconPos="left" onClick={() => cancelar()} />
                 </div>
             </>

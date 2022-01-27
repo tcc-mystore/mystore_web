@@ -20,22 +20,22 @@ const CriarConta = (props) => {
 
     const criarConta = () => {
         setAguardando(true);
-        props.handleLogin({ email }, (retorno) => {
-            if (retorno.erro) {
-                if (retorno.erro.mensagem) {
-                    setAlerta("error");
-                    setMensagem(retorno.erro.mensagem);
-                }
-                if (retorno.erro.status === 401) {
-                    setAlerta("warn");
-                    setMensagem("Acesso negado ou dados incorretos!");
-                }
-                setAguardando(false);
-            } else {
-                setAlerta("");
-                setMensagem("");
-                setAguardando(false);
-            }
+        props.validacaoRecuperarSenha({ email, codigo, senha }, (retorno) => {
+           // eslint-disable-next-line 
+           var erro = new String(retorno.erro.detalhes);
+           if (retorno.erro && !erro.includes("Error: Actions must be plain objects.")) {
+               //setPagina("Erro na conexão do sistema com o servidor.");
+               if (retorno.erro.mensagem) {
+                   setAlerta("error");
+                   setMensagem(retorno.erro.mensagem);
+                   setAguardando(false);
+               }
+           } else {
+               setAlerta("success");
+               setMensagem("Você receberá um email com o código de validação da nova senha!");
+               setAguardando(false);
+               setVoltar(true);
+           }
         });
     }
 
@@ -114,7 +114,7 @@ const CriarConta = (props) => {
                     </span>
                 </div>
                 <div className='p-d-flex p-jc-between p-mt-1'>
-                    <Button label="Cadastrar" icon="pi pi-check" className='p-mr-1' iconPos="left" onClick={() => criarConta()} />
+                    <Button label="Cadastrar" icon="pi pi-check" className='p-mr-1' iconPos="left" onClick={() => criarConta()} disabled={!email || !senha || !codigo}/>
                     <Button label="Cancelar" icon="pi pi-ban" className='p-ml-1 p-button-danger' iconPos="left" onClick={() => cancelar()} />
                 </div>
             </>

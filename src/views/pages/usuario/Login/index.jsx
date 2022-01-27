@@ -83,7 +83,7 @@ const Login = (props) => {
                         </span>
                     </div>
                     <div className='p-mt-1'>
-                        <Button type="submit" label="Entrar" icon="pi pi-unlock" className='p-mt-2' iconPos="left" />
+                        <Button type="submit" label="Entrar" icon="pi pi-unlock" className='p-mt-2' iconPos="left" disabled={!email || !senha} />
                     </div>
                     <div className='p-d-flex p-jc-between p-mt-1'>
                         <Link to="/mystore/recuperar-senha" className="p-mb-2" style={{ textDecoration: 'none' }}>Recuperar senha</Link>
