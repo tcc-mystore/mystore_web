@@ -9,9 +9,9 @@ import * as actions from '../../../../domain/actions';
 
 const RecuperarSenha = (props) => {
 
-    const [voltar, setVoltar] = useState(false);
+    const [irPara, setIrPara] = useState(null);
     const [aguardando, setAguardando] = useState(false);
-    const [email, setEmail] = useState("paulistensetecnologia@gmail.com");
+    const [email, setEmail] = useState("");
     const [alerta, setAlerta] = useState("");
     const [mensagem, setMensagem] = useState("");
     const [pagina, setPagina] = useState("Solicitando recuperação de senha.");
@@ -32,7 +32,7 @@ const RecuperarSenha = (props) => {
                 setAlerta("success");
                 setMensagem("Você receberá um email com o código de validação da nova senha!");
                 setAguardando(false);
-                setVoltar(true);
+                setIrPara('/mystore/criar-conta');
             }
         }
         );
@@ -41,17 +41,24 @@ const RecuperarSenha = (props) => {
     const cancelar = () => {
         setAguardando(true);
         setAlerta("warn");
-        setMensagem("Operação cancelada!");
-        setVoltar(true);
+        setMensagem("Recuperação de senha. Operação cancelada!");
+        setIrPara('/mystore/');
         setAguardando(false);
     }
 
-    useEffect(() => { }, [alerta, mensagem])
+    useEffect(() => { 
+        const { location } = props;
+        if (location.state) {
+            setAlerta(location.state.alerta);
+            setMensagem(location.state.mensagem);
+            setEmail(location.state.email);
+        }// eslint-disable-next-line
+    }, [])
 
-    if (voltar) {
+    if (irPara !== null) {
         return <Redirect to={{
-            pathname: '/mystore/',
-            state: { alerta, mensagem }
+            pathname: irPara,
+            state: { alerta, mensagem, email }
         }} />
     }
 

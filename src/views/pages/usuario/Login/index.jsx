@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const Login = (props) => {
 
     const [aguardando, setAguardando] = useState(false);
-    const [email, setEmail] = useState("paulistensetecnologia@gmail.com");
+    const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("123456");
     const [alerta, setAlerta] = useState("");
     const [mensagem, setMensagem] = useState("");
@@ -28,7 +28,11 @@ const Login = (props) => {
                 }
                 if (retorno.erro.status === 401) {
                     setAlerta("warn");
-                    setMensagem("Acesso negado ou dados incorretos!");
+                    setMensagem("Acesso negado!");
+                }
+                if (retorno.erro.error_description === 'Bad credentials') {
+                    setAlerta("warn");
+                    setMensagem("Email ou senha inválido!");
                 }
                 setAguardando(false);
             } else {
@@ -44,6 +48,7 @@ const Login = (props) => {
         if (location.state) {
             setAlerta(location.state.alerta);
             setMensagem(location.state.mensagem);
+            setEmail(location.state.email);
         }// eslint-disable-next-line
     }, [])
 
@@ -86,8 +91,8 @@ const Login = (props) => {
                         <Button type="submit" label="Entrar" icon="pi pi-unlock" className='p-mt-2' iconPos="left" disabled={!email || !senha} />
                     </div>
                     <div className='p-d-flex p-jc-between p-mt-1'>
-                        <Link to="/mystore/recuperar-senha" className="p-mb-2" style={{ textDecoration: 'none' }}>Recuperar senha</Link>
-                        <Link to="/mystore/criar-conta" className="p-mb-2" style={{ textDecoration: 'none' }}>Criar conta</Link>
+                        <Link to={{ pathname: '/mystore/recuperar-senha', state: { email } }} className="p-mb-2" style={{ textDecoration: 'none' }}>Recuperar senha</Link>
+                        <Link to={{ pathname: '/mystore/criar-conta', state: { email } }} className="p-mb-2" style={{ textDecoration: 'none' }}>Validar conta</Link>
                     </div>
                 </form>
             </>

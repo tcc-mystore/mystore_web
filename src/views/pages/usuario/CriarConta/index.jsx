@@ -9,50 +9,62 @@ import { Redirect } from 'react-router-dom';
 
 const CriarConta = (props) => {
 
-    const [voltar, setVoltar] = useState(false);
+    const [irPara, setIrPara] = useState(null);
     const [aguardando, setAguardando] = useState(false);
-    const [email, setEmail] = useState("paulistensetecnologia@gmail.com");
-    const [senha, setSenha] = useState("");
-    const [confirmaSenha, setConfirmarSenha] = useState("");
-    const [codigo, setCodigo] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("123456");
+    const [confirmaSenha, setConfirmarSenha] = useState("123456");
+    const [codigo, setCodigo] = useState(516718);
     const [alerta, setAlerta] = useState("");
     const [mensagem, setMensagem] = useState("");
 
     const criarConta = () => {
         setAguardando(true);
-        props.validacaoRecuperarSenha({ email, codigo, senha }, (retorno) => {
-           // eslint-disable-next-line 
-           var erro = new String(retorno.erro.detalhes);
-           if (retorno.erro && !erro.includes("Error: Actions must be plain objects.")) {
-               //setPagina("Erro na conexão do sistema com o servidor.");
-               if (retorno.erro.mensagem) {
-                   setAlerta("error");
-                   setMensagem(retorno.erro.mensagem);
-                   setAguardando(false);
-               }
-           } else {
-               setAlerta("success");
-               setMensagem("Você receberá um email com o código de validação da nova senha!");
-               setAguardando(false);
-               setVoltar(true);
-           }
+        props.validacaoRecuperarSenha({ email, codigoAcesso: codigo, senha }, (retorno) => {
+            if (retorno.erro) {
+                // eslint-disable-next-line 
+                var erro = new String(retorno.erro.detalhes);
+                if(!erro.includes("Error: Actions must be plain objects.")){
+                    if (retorno.erro.mensagem) {
+                        setAlerta("error");
+                        setMensagem(retorno.erro.mensagem);
+                        setAguardando(false);
+                    } else if (retorno.erro.status === 400) {
+                        setAlerta("warn");
+                        setMensagem(retorno.erro.title + '. ' + retorno.erro.detail);
+                        setAguardando(false);
+                    }
+                }
+            } else {
+                setAlerta("success");
+                setMensagem("Senha recuperada com sucesso!");
+                setAguardando(false);
+                setIrPara('/mystore/');
+            }
         });
     }
 
     const cancelar = () => {
         setAguardando(true);
         setAlerta("warn");
-        setMensagem("Operação cancelada!");
-        setVoltar(true);
+        setMensagem("Validar conta. Operação cancelada!");
+        setIrPara('/mystore/');
         setAguardando(false);
     }
 
-    useEffect(() => { }, [alerta, mensagem])
+    useEffect(() => {
+        const { location } = props;
+        if (location.state) {
+            setAlerta(location.state.alerta);
+            setMensagem(location.state.mensagem);
+            setEmail(location.state.email);
+        }// eslint-disable-next-line
+    }, [])
 
-    if (voltar) {
+    if (irPara !== null) {
         return <Redirect to={{
-            pathname: '/mystore/',
-            state: { alerta, mensagem }
+            pathname: irPara,
+            state: { alerta, mensagem, email }
         }} />
     }
 
@@ -82,7 +94,10 @@ const CriarConta = (props) => {
                             id="codigo"
                             name="codigo"
                             value={codigo}
-                            onChange={(ev) => setCodigo(ev.target.value)}
+                            onValueChange={(ev) => setCodigo(ev.target.value)}
+                            inputId="withoutgrouping"
+                            mode="decimal"
+                            useGrouping={false}
                         />
                         <label htmlFor="codigo">Código de Acesso*</label>
                     </span>
@@ -114,7 +129,7 @@ const CriarConta = (props) => {
                     </span>
                 </div>
                 <div className='p-d-flex p-jc-between p-mt-1'>
-                    <Button label="Cadastrar" icon="pi pi-check" className='p-mr-1' iconPos="left" onClick={() => criarConta()} disabled={!email || !senha || !codigo}/>
+                    <Button label="Cadastrar" icon="pi pi-check" className='p-mr-1' iconPos="left" onClick={() => criarConta()} disabled={!email || !senha || !codigo} />
                     <Button label="Cancelar" icon="pi pi-ban" className='p-ml-1 p-button-danger' iconPos="left" onClick={() => cancelar()} />
                 </div>
             </>
