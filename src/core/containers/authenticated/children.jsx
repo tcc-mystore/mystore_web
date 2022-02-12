@@ -8,10 +8,9 @@ const AuthenticatedChildren = (props) => {
 
     return (
         <>
-        {console.log(props)}
             <div className="p-grid">
                 <div className="p-col-12">
-                    <BarraDeFerramentas handleLogout={props.children.props.handleLogout} dadosUsuario={props.children.props.usuario}/>
+                    <BarraDeFerramentas handleLogout={props.children.props.handleLogout} dadosUsuario={props.children.props.usuario} />
                 </div>
                 <div className="p-col-2">
                     <BarraDeMenu />

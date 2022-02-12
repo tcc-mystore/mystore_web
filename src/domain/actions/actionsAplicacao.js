@@ -9,7 +9,6 @@ export const tokenRecuperarSenha = (dadosUsuario, callback) => {
                 `grant_type=client_credentials`,
             )
             .then((response) => {
-                console.log(response.data);
                 return api(response.data.access_token).get(`/v1/usuarios/${dadosUsuario.email}/codigo-acesso`)
                     .then(
                         (response) => dispatch(response.data))

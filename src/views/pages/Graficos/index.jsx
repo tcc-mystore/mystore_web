@@ -53,7 +53,6 @@ const Graficos = (props) => {
 
     const handleChange = (event) => {
         setTipo(event.target.value);
-        console.log(event.name)
     };
 
     const carteiraClientesFiltro = {

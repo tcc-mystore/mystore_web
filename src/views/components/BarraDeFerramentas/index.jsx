@@ -28,8 +28,6 @@ const BarraDeFerramentas = ({ handleLogout, dadosUsuario }) => {
 
     return (
         <>
-            {/* {console.log('dadosUsuario')}
-            {console.log(dadosUsuario)} */}
             <div>
                 <div className="card">
                     <TieredMenu model={items} popup ref={menu} id="overlay_tmenu" />

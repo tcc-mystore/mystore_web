@@ -109,7 +109,6 @@ export const getUsuarios = () => {
 }
 
 export const handleLogin = ({ email, senha }, callback) => {
-    console.log(`ops`)
     return (dispatch) => {
         authorizationServerLogin()
             .post(
@@ -212,7 +211,7 @@ export const validacaoRecuperarSenha = (dadosUsuario, callback) => {
                 `grant_type=client_credentials`,
             )
             .then((response) => {
-                api(buscarToken())
+                api(response.data.access_token)
                     .put(`/v1/usuarios/cadastrar-senha`, dadosUsuario)
                     .then((response) => {
                         callback({ usuarioRecuperado: response.data });
