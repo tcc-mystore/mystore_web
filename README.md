@@ -28,6 +28,14 @@ $ npm install --save react-router-dom
 #Instala o gerenciador de histórico de navegação.
 $ npm install --save history
 
+#Instalar o Bootstrap utilizando reactstrap: https://reactstrap.github.io/
+$ npm install --save bootstrap
+$ npm install --save reactstrap
+
+#Instalar a biblioteca de icones
+$ npm install --save @material-ui/icons
+$ npm install --save @material-ui/core
+
 # Material-UI a biblioteca de componentes React UI: https://material-ui.com/pt/
 $ npm install --save @material-ui/core
 
