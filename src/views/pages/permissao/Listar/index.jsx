@@ -3,97 +3,84 @@ import React, { useEffect, useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import ModalCarregando from '../../../components/ModalCarregando';
+import { connect, useSelector } from 'react-redux';
+import * as  actionsPermissao from '../../../../domain/actions/actionsPermissao';
+import { InputText } from 'primereact/inputtext';
+import { Calendar } from 'primereact/calendar';
 
-const Listar = () => {
+const Listar = (props) => {
 
     const [permissoes, setPermissoes] = useState([]);
-    const [aguardando, setAguardando] = useState(false);
-
-    const temporizador = async () => {
-        await sleep(3000);
-
-        function sleep(ms) {
-            return new Promise((resolve) => {
-                setTimeout(resolve, ms);
-            });
-        }
-        setAguardando(false);
-    }
+    const { permissao } = useSelector((state) => state);
 
     useEffect(() => {
-        setAguardando(true);
-        //Teste
-        temporizador();
-        setPermissoes([
-            {
-                "id": 1,
-                "nome": "CONSULTAR_USUARIOS_GRUPOS_PERMISSOES",
-                "descricao": "Permite consultar usuários, grupos e permissões"
-            },
-            {
-                "id": 2,
-                "nome": "EDITAR_CIDADES",
-                "descricao": "Permite criar ou editar cidades"
-            },
-            {
-                "id": 3,
-                "nome": "EDITAR_CLIENTES",
-                "descricao": "Permite criar ou editar clientes"
-            },
-            {
-                "id": 4,
-                "nome": "EDITAR_EMPRESAS",
-                "descricao": "Permite criar, editar ou gerenciar empresas"
-            },
-            {
-                "id": 5,
-                "nome": "EDITAR_ESTADOS",
-                "descricao": "Permite criar ou editar estados"
-            },
-            {
-                "id": 6,
-                "nome": "EDITAR_FORMAS_PAGAMENTO",
-                "descricao": "Permite criar ou editar formas de pagamento"
-            },
-            {
-                "id": 7,
-                "nome": "EDITAR_USUARIOS_GRUPOS_PERMISSOES",
-                "descricao": "Permite criar ou editar usuários, grupos e permissões"
-            },
-            {
-                "id": 8,
-                "nome": "CONSULTAR_PEDIDOS",
-                "descricao": "Permite consultar pedidos"
-            },
-            {
-                "id": 9,
-                "nome": "GERENCIAR_PEDIDOS",
-                "descricao": "Permite gerenciar pedidos"
-            },
-            {
-                "id": 10,
-                "nome": "GERENCIAR_HOSTS",
-                "descricao": "Permite gerenciar e configurar o servidor"
-            }
-        ]);
+        listarPermissoes();
+        // eslint-disable-next-line
+    }, [permissao.permissoes]);
 
-    }, [])
+    useEffect(() => {
+        return () => limparPermissoes();
+        // eslint-disable-next-line
+    }, []);
 
-    if (aguardando)
-        return <ModalCarregando aguardando={aguardando} pagina="Listando as permissões do sistema." />
+    const listarPermissoes = async () => {
+        await props.getPermissoes();
+        if (permissao.permissoes) {
+            setPermissoes(permissao.permissoes._embedded.permissoes)
+        }
+    }
+
+    const limparPermissoes = async () => {
+        console.log('limpando a tela');
+        await props.limparPermissoes();
+    }
+
+    if (!permissao.permissoes)
+        return <ModalCarregando aguardando={true} pagina="Listando as permissões do sistema." />
     else
         return (
             <div>
                 <div className="card">
+                    <div className="p-fluid grid">
+                        <div className=" md:col-4">
+                            <label htmlFor="basic">Basic</label>
+                            <InputText />
+                        </div>
+                        <div className=" md:col-4">
+
+                            <label htmlFor="basic">Basic</label>
+                            <InputText />
+                        </div>
+                        <div className=" md:col-4">
+
+                            <label htmlFor="basic">Basic</label>
+                            <InputText />
+                        </div>
+                    </div>
                     <DataTable value={permissoes} responsiveLayout="scroll">
                         <Column field="id" header="Código"></Column>
                         <Column field="descricao" header="Descricao"></Column>
                         <Column field="nome" header="Nome Técnico"></Column>
                     </DataTable>
                 </div>
+                <div className="card">
+                <h5>Popup</h5>
+                <div className="p-fluid grid formgrid">
+                    <div className="field col-12 md:col-4">
+                        <label htmlFor="basic">Basic</label>
+                        <Calendar id="basic" />
+                    </div>
+                    <div className="field col-12 md:col-4">
+                        <label htmlFor="icon">Icon</label>
+                        <Calendar id="icon" showIcon />
+                    </div>
+                    <div className="field col-12 md:col-4">
+                        <label htmlFor="spanish">Spanish</label>
+                        <Calendar id="spanish"  dateFormat="dd/mm/yy" />
+                    </div>
+                    </div> </div>
             </div>
         );
-
 }
 
-export default Listar;
+export default connect(null, actionsPermissao)(Listar);
