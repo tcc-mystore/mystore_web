@@ -65,6 +65,17 @@ $ npm install --save validator
 ### Autenticação Base64
 $ npm install --save base-64
 
+$ npm install --save husky lint-staged prettier
+$ npm install --save node-sass-chokidar
+$ npm install --save npm-run-all
+$ npm install --save react-router
+$ npm install --save react-bootstrap bootstrap@3
+$ npm install --save enzyme enzyme-adapter-react-16 
+& npm install --save jest-enzyme
+$ npm install --save react-styleguidist
+$ npm install --save source-map-explorer
+$ npm install --save gh-pages
+
 # Rodar o projeto
 $ npm start
 
