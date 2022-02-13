@@ -32,7 +32,7 @@ const RecuperarSenha = (props) => {
                 setAlerta("success");
                 setMensagem("Você receberá um email com o código de validação da nova senha!");
                 setAguardando(false);
-                setIrPara('/mystore/criar-conta');
+                setIrPara('/mystore/validar-conta');
             }
         }
         );

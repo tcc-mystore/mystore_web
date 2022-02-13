@@ -92,7 +92,7 @@ const Login = (props) => {
                     </div>
                     <div className='p-d-flex p-jc-between p-mt-1'>
                         <Link to={{ pathname: '/mystore/recuperar-senha', state: { email } }} className="p-mb-2" style={{ textDecoration: 'none' }}>Recuperar senha</Link>
-                        <Link to={{ pathname: '/mystore/criar-conta', state: { email } }} className="p-mb-2" style={{ textDecoration: 'none' }}>Validar conta</Link>
+                        <Link to={{ pathname: '/mystore/validar-conta', state: { email } }} className="p-mb-2" style={{ textDecoration: 'none' }}>Validar conta</Link>
                     </div>
                 </form>
             </>

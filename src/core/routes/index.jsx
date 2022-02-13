@@ -6,7 +6,7 @@ import { history } from '../history';
 import Unauthenticated from '../containers/unauthenticated';
 import Authenticated from '../containers/authenticated';
 import Login from '../../views/pages/usuario/Login';
-import CriarConta from '../../views/pages/usuario/CriarConta';
+import ValidarConta from '../../views/pages/usuario/ValidarConta';
 import RecuperarSenha from '../../views/pages/usuario/RecuperarSenha';
 import PaginaInexistente from '../../views/pages/mystore/PaginaInexistente';
 import PaginaInicial from '../../views/pages/mystore/PaginaInicial';
@@ -20,7 +20,7 @@ const Routes = () => {
                     <Switch>
                          {/* Páginas sem autenticação */}
                         <Route path="/mystore/" exact component={Unauthenticated(Login)} />
-                        <Route path="/mystore/criar-conta" exact component={Unauthenticated(CriarConta)} />
+                        <Route path="/mystore/validar-conta" exact component={Unauthenticated(ValidarConta)} />
                         <Route path="/mystore/recuperar-senha" exact component={Unauthenticated(RecuperarSenha)} />
                         {/* Páginas com autenticação */}
                         <Route path="/mystore/pagina-inicial" exact component={Authenticated(PaginaInicial)} />

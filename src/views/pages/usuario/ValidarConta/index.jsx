@@ -7,7 +7,7 @@ import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { Redirect } from 'react-router-dom';
 
-const CriarConta = (props) => {
+const ValidarConta = (props) => {
 
     const [irPara, setIrPara] = useState(null);
     const [aguardando, setAguardando] = useState(false);
@@ -18,7 +18,7 @@ const CriarConta = (props) => {
     const [alerta, setAlerta] = useState("");
     const [mensagem, setMensagem] = useState("");
 
-    const criarConta = () => {
+    const validarConta = () => {
         setAguardando(true);
         props.validacaoRecuperarSenha({ email, codigoAcesso: codigo, senha }, (retorno) => {
             if (retorno.erro) {
@@ -129,10 +129,10 @@ const CriarConta = (props) => {
                     </span>
                 </div>
                 <div className='p-d-flex p-jc-between p-mt-1'>
-                    <Button label="Cadastrar" icon="pi pi-check" className='p-mr-1' iconPos="left" onClick={() => criarConta()} disabled={!email || !senha || !codigo} />
+                    <Button label="Cadastrar" icon="pi pi-check" className='p-mr-1' iconPos="left" onClick={() => validarConta()} disabled={!email || !senha || !codigo} />
                     <Button label="Cancelar" icon="pi pi-ban" className='p-ml-1 p-button-danger' iconPos="left" onClick={() => cancelar()} />
                 </div>
             </>
         );
 }
-export default CriarConta;
+export default ValidarConta;
