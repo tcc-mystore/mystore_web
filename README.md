@@ -32,9 +32,17 @@ $ npm install --save history
 $ npm install --save bootstrap
 $ npm install --save reactstrap
 
+# Material-UI a biblioteca de componentes React UI: https://material-ui.com/pt/
+$ npm install @mui/icons-material
+$ npm install --save @emotion/react 
+$ npm install --save @emotion/styled
+
 #Instalar a biblioteca de icones
 $ npm install --save @material-ui/icons
 $ npm install --save @material-ui/core
+
+# Componentes de gráficos
+$ npm install --save  react-google-charts
 
 # Material-UI a biblioteca de componentes React UI: https://material-ui.com/pt/
 $ npm install --save @material-ui/core
@@ -44,9 +52,6 @@ $ npm install --save @material-ui/icons
 
 # Instalar a biblioteca de componentes React UI: https://material-ui.com/pt/
 $ npm install--save  @material-ui/lab
-
-# Componentes de gráficos
-$ npm install --save  react-google-charts
 
 # Comopentes do PrimeReact
 $ npm install -- save primereact
