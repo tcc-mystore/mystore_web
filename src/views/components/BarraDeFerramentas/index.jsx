@@ -12,7 +12,6 @@ const BarraDeFerramentas = ({ handleLogout, alternarMenu }) => {
     const [icone, setIcone] = useState(iconeUsuario);
     
     useEffect(()=>{
-        console.log(perfilUsuario);
         if(perfilUsuario){
             setPrimeiroNome(perfilUsuario.nome);
             if(perfilUsuario.url){
