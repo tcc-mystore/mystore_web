@@ -1,3 +1,3 @@
 export * from './aplicacao';
 export * from './permissao';
-export * from './usuarios';
+export * from './usuario';

@@ -50,7 +50,7 @@ body {
     right: 1rem;
 }
 .sidebar [aria-expanded="true"]{
-    /* background-color: #26be4c; */
+    background-color: #3a7fda;
 }
 .logo-barra-de-ferramentas{
     flex-direction: row !important;
