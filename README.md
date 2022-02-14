@@ -53,9 +53,6 @@ $ npm install --save @material-ui/icons
 # Instalar a biblioteca de componentes React UI: https://material-ui.com/pt/
 $ npm install--save  @material-ui/lab
 
-# Biblioteca de estilização do PrimeReact
-$ npm install --save primeflex@2.0.0
-
 # Redux compartilha estados entre componentes
 $ npm install --save redux react-redux redux-thunk
 
