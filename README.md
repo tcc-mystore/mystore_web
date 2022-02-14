@@ -53,12 +53,6 @@ $ npm install --save @material-ui/icons
 # Instalar a biblioteca de componentes React UI: https://material-ui.com/pt/
 $ npm install--save  @material-ui/lab
 
-# Comopentes do PrimeReact
-$ npm install -- save primereact
-
-# Componentes de icones do PrimeReact
-$ npm install --save primeicons
-
 # Biblioteca de estilização do PrimeReact
 $ npm install --save primeflex@2.0.0
 
