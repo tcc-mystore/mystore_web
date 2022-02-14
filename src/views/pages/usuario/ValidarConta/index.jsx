@@ -120,7 +120,7 @@ const ValidarConta = (props) => {
                             onChange={(ev) => setConfirmarSenha(ev.target.value)} required />
                     </InputGroup>
                 </FormGroup>
-                <div className='p-d-flex p-jc-between p-mt-1'>
+                <div className='d-flex justify-content-between p-mt-1'>
                     <BotaoConfirmar aguardando={aguardando} />
                     <BotaoCancelar onClickCancelar={cancelar} desabilitado={aguardando} />
                 </div>

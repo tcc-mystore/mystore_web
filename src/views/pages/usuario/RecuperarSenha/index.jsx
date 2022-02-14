@@ -27,7 +27,7 @@ const RecuperarSenha = (props) => {
                     setAlerta("error");
                     setMensagem(retorno.erro.mensagem);
                     setAguardando(false);
-                }else if (retorno.erro.status === 404) {
+                } else if (retorno.erro.status === 404) {
                     setAlerta("warning");
                     setMensagem(retorno.erro.detail);
                     setAguardando(false);
@@ -50,7 +50,7 @@ const RecuperarSenha = (props) => {
         setAguardando(false);
     }
 
-    useEffect(() => { 
+    useEffect(() => {
         const { location } = props;
         if (location.state) {
             setAlerta(location.state.alerta);
@@ -65,49 +65,31 @@ const RecuperarSenha = (props) => {
             state: { alerta, mensagem, email }
         }} />
     }
-        return (
-            <>
-                {/* 
-                <h3 className="p-text-center">Solicitar Nova Senha</h3>
-                <div className="p-field p-mt-1">
-                    <span className="p-float-label p-input-icon-right">
-                        <i className="pi pi-envelope" />
-                        <InputText
-                            id="email"
-                            name="email"
+    return (
+        <>
+            <Form onSubmit={trocarSenha} className="form-signin text-center">
+                <img className="mb-4" src={logo} alt="SAC" width="200" height="200" />
+                <h1 className="h3 mb-3 font-weight-normal">Recuperar Senha</h1>
+                {mensagem ? <Alerta tipoAlerta={alerta} mensagem={mensagem} /> : null}
+                <FormGroup>
+                    <InputGroup>
+                        <InputGroupText>E-mail</InputGroupText>
+                        <Input
+                            type="email"
                             value={email}
-                            onChange={(ev) => setEmail(ev.target.value)}
-                            className='email'
-                        />
-                        <label htmlFor="email" className='rmail'>Email*</label>
-                    </span>
+                            name="email"
+                            id="email"
+                            placeholder="E-mail do usuário"
+                            onChange={(ev) => setEmail(ev.target.value)} required />
+                    </InputGroup>
+                </FormGroup>
+                <div className='d-flex justify-content-between p-mt-1'>
+                    <BotaoEnviar onClickEnviar={trocarSenha} aguardando={aguardando} desabilitado={!email} />
+                    <BotaoCancelar onClickCancelar={cancelar} />
                 </div>
-                */}
-                <Form onSubmit={trocarSenha} className="form-signin text-center">
-                    <img className="mb-4" src={logo} alt="SAC" width="200" height="200" />
-                    <h1 className="h3 mb-3 font-weight-normal">Recuperar Senha</h1>
-                    {/* <AlertaErro erro={erro} />
-                    <AlertaAtencao atencao={atencao} /> */}
-                    {mensagem ? <Alerta tipoAlerta={alerta} mensagem={mensagem} /> : null}
-                    <FormGroup>
-                        <InputGroup>
-                                <InputGroupText>E-mail</InputGroupText>
-                            <Input
-                                type="email"
-                                value={email}
-                                name="email"
-                                id="email"
-                                placeholder="E-mail do usuário"
-                                onChange={(ev) => setEmail(ev.target.value)} required />
-                        </InputGroup>
-                    </FormGroup>
-                    <div className='p-d-flex p-jc-between p-mt-1'>
-                    <BotaoEnviar onClickEnviar={trocarSenha} aguardando={aguardando} desabilitado={!email}/> 
-                    <BotaoCancelar onClickCancelar={cancelar}/>
-                </div>
-                </Form>
-            </>
-        );
+            </Form>
+        </>
+    );
 }
 
 const mapStateToProps = state => ({
