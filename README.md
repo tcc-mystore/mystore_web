@@ -43,9 +43,6 @@ $ npm install --save @mui/icons-material
 # Componentes de gráficos
 $ npm install --save  react-google-charts
 
-# Instalar a biblioteca de componentes React UI: https://material-ui.com/pt/
-$ npm install--save  @material-ui/lab
-
 # Redux compartilha estados entre componentes
 $ npm install --save redux react-redux redux-thunk
 
