@@ -1,9 +1,10 @@
-import React, { useRef, useEffect } from 'react';
-import { Messages } from 'primereact/messages';
+import React, { useState } from 'react';
+import { Alert } from 'reactstrap';
 
 const AlertaAtencao = (props) => {
 
-    const mensagem = useRef(null);
+    const [visible, setVisible] = useState(true);
+    const onDismiss = () => setVisible(false);
 
     const tipoAlerta = () => {
         let tipo = '';
@@ -11,7 +12,7 @@ const AlertaAtencao = (props) => {
             case 'success':
                 tipo = 'Sucesso!';
                 break;
-            case 'warn':
+            case 'warning':
                 tipo = 'Atênção!';
                 break;
             case 'error':
@@ -27,18 +28,11 @@ const AlertaAtencao = (props) => {
         return tipo;
     }
 
-    useEffect(() => {
-        props.tipoAlerta && mensagem.current.show({ 
-            severity: props.tipoAlerta, 
-            summary: <div>{tipoAlerta(props.tipoAlerta)}</div>, 
-            detail: <div>{props.mensagem}</div>, 
-            sticky: true });
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
-
     return (
         <>
-            <Messages ref={mensagem} />
+            <Alert color={props.tipoAlerta} isOpen={visible} toggle={onDismiss}>
+                {tipoAlerta(props.tipoAlerta) + ' ' + props.mensagem}
+            </Alert>
         </>
     )
 }

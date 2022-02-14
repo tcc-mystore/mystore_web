@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Redirect, Route, Router, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from '../store';
-import { history } from '../history';
+import { createBrowserHistory } from 'history';
+import store from '../../domain/reducers';
 import Unauthenticated from '../containers/unauthenticated';
 import Authenticated from '../containers/authenticated';
 import Login from '../../views/pages/usuario/Login';
@@ -11,6 +11,8 @@ import RecuperarSenha from '../../views/pages/usuario/RecuperarSenha';
 import PaginaInexistente from '../../views/pages/mystore/PaginaInexistente';
 import PaginaInicial from '../../views/pages/mystore/PaginaInicial';
 import ListarPermissoes from '../../views/pages/permissao/Listar';
+
+const history = createBrowserHistory();
 
 const Routes = () => {
     return (

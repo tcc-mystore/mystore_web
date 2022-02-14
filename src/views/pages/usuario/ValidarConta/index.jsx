@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import ModalCarregando from '../../../components/ModalCarregando';
-import Alerta from '../../../components/Alerta';
-import { InputText } from 'primereact/inputtext';
-import { InputNumber } from 'primereact/inputnumber';
-import { Password } from 'primereact/password';
-import { Button } from 'primereact/button';
 import { Redirect } from 'react-router-dom';
+import { Form, FormGroup, Input, InputGroup, InputGroupText } from 'reactstrap';
+import logo from '../../../../assets/images/logo.png';
+import BotaoConfirmar from '../../../components/BotaoConfirmar';
+import BotaoCancelar from '../../../components/BotaoCancelar';
 
 const ValidarConta = (props) => {
 
@@ -18,19 +16,20 @@ const ValidarConta = (props) => {
     const [alerta, setAlerta] = useState("");
     const [mensagem, setMensagem] = useState("");
 
-    const validarConta = () => {
+    const validarConta = (e) => {
+        e.preventDefault();
         setAguardando(true);
         props.validacaoRecuperarSenha({ email, codigoAcesso: codigo, senha }, (retorno) => {
             if (retorno.erro) {
                 // eslint-disable-next-line 
                 var erro = new String(retorno.erro.detalhes);
-                if(!erro.includes("Error: Actions must be plain objects.")){
+                if (!erro.includes("Error: Actions must be plain objects.")) {
                     if (retorno.erro.mensagem) {
                         setAlerta("error");
                         setMensagem(retorno.erro.mensagem);
                         setAguardando(false);
                     } else if (retorno.erro.status === 400) {
-                        setAlerta("warn");
+                        setAlerta("warning");
                         setMensagem(retorno.erro.title + '. ' + retorno.erro.detail);
                         setAguardando(false);
                     }
@@ -46,7 +45,7 @@ const ValidarConta = (props) => {
 
     const cancelar = () => {
         setAguardando(true);
-        setAlerta("warn");
+        setAlerta("warning");
         setMensagem("Validar conta. Operação cancelada!");
         setIrPara('/mystore/');
         setAguardando(false);
@@ -68,71 +67,65 @@ const ValidarConta = (props) => {
         }} />
     }
 
-    if (aguardando)
-        return <ModalCarregando aguardando={aguardando} pagina="Validando conta de acesso." />
-    else
-        return (
-            <>
-                {mensagem ? <Alerta tipoAlerta={alerta} mensagem={mensagem} /> : null}
-                <h3 className="p-text-center">Validando Conta de Acesso</h3>
-                <div className="p-field p-mt-1">
-                    <span className="p-float-label p-input-icon-right">
-                        <i className="pi pi-envelope" />
-                        <InputText
-                            id="email"
-                            name="email"
+    return (
+        <>
+            <Form onSubmit={validarConta} className="form-signin text-center">
+                <img className="mb-4" src={logo} alt="Celke" width="200" height="200" />
+                <h1 className="h3 mb-3 font-weight-normal">Alterar Senha</h1>
+                <FormGroup>
+                    <InputGroup>
+                        <InputGroupText>E-mail</InputGroupText>
+                        <Input
+                            type="email"
                             value={email}
-                            onChange={(ev) => setEmail(ev.target.value)}
-                            className='email'
-                        />
-                        <label htmlFor="email" className='rmail'>Email*</label>
-                    </span>
-                </div>
-                <div className="p-field">
-                    <span className="p-float-label">
-                        <InputNumber
-                            id="codigo"
-                            name="codigo"
+                            name="email"
+                            id="email"
+                            placeholder="E-mail do usuário"
+                            onChange={(ev) => setEmail(ev.target.value)} required />
+                    </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                    <InputGroup>
+                        <InputGroupText>Código</InputGroupText>
+                        <Input
+                            type="number"
                             value={codigo}
-                            onValueChange={(ev) => setCodigo(ev.target.value)}
-                            inputId="withoutgrouping"
-                            mode="decimal"
-                            useGrouping={false}
-                        />
-                        <label htmlFor="codigo">Código de Acesso*</label>
-                    </span>
-                </div>
-                <div className="p-field">
-                    <span className="p-float-label">
-                        <Password
-                            id="password"
-                            name="password"
+                            name="email"
+                            id="codigo"
+                            placeholder="Código recebido no email"
+                            onChange={(ev) => setCodigo(ev.target.value)} required />
+                    </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                    <InputGroup>
+                        <InputGroupText style={{ height: 46 }}>Senha</InputGroupText>
+                        <Input
+                            type="password"
                             value={senha}
-                            onChange={(ev) => setSenha(ev.target.value)}
-                            className='password'
-                            toggleMask
-                        />
-                        <label htmlFor="password" className='password'>Senha*</label>
-                    </span>
-                </div>
-                <div className="p-field">
-                    <span className="p-float-label">
-                        <Password
-                            id="password"
-                            name="password"
+                            name="senha"
+                            id="senha"
+                            placeholder="Nova senha do usuário"
+                            onChange={(ev) => setSenha(ev.target.value)} required />
+                    </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                    <InputGroup>
+                        <InputGroupText style={{ height: 46 }}>Confirmar Senha</InputGroupText>
+                        <Input
+                            type="password"
                             value={confirmaSenha}
-                            onChange={(ev) => setConfirmarSenha(ev.target.value)}
-                            className='password'
-                            toggleMask
-                        />
-                        <label htmlFor="password" className='password'>Confirma senha*</label>
-                    </span>
+                            name="confirmaSenha"
+                            id="confirmaSenha"
+                            placeholder="Confirme a senha anterior"
+                            onChange={(ev) => setConfirmarSenha(ev.target.value)} required />
+                    </InputGroup>
+                </FormGroup>
+                <div className='d-flex justify-content-between p-mt-1'>
+                    <BotaoConfirmar aguardando={aguardando} />
+                    <BotaoCancelar onClickCancelar={cancelar} desabilitado={aguardando} />
                 </div>
-                <div className='p-d-flex p-jc-between p-mt-1'>
-                    <Button label="Cadastrar" icon="pi pi-check" className='p-mr-1' iconPos="left" onClick={() => validarConta()} disabled={!email || !senha || !codigo} />
-                    <Button label="Cancelar" icon="pi pi-ban" className='p-ml-1 p-button-danger' iconPos="left" onClick={() => cancelar()} />
-                </div>
-            </>
-        );
+            </Form>
+        </>
+    );
 }
 export default ValidarConta;

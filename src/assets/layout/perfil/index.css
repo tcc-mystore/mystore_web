@@ -1,0 +1,16 @@
+
+.img-perfil{
+    position: relative;
+    display: inline-block;
+}
+.img-perfil:hover .edit{
+    display: block;
+}
+.edit{
+    padding-top: 7px;
+    padding-right: 7px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: none;
+}

@@ -28,26 +28,20 @@ $ npm install --save react-router-dom
 #Instala o gerenciador de histórico de navegação.
 $ npm install --save history
 
+#Instalar o Bootstrap utilizando reactstrap: https://reactstrap.github.io/
+$ npm install --save bootstrap
+$ npm install --save reactstrap
+
 # Material-UI a biblioteca de componentes React UI: https://material-ui.com/pt/
-$ npm install --save @material-ui/core
+$ npm install --save @mui/material
+$ npm install --save @emotion/react 
+$ npm install --save @emotion/styled
 
 # Instalar a biblioteca de icones
-$ npm install --save @material-ui/icons
-
-# Instalar a biblioteca de componentes React UI: https://material-ui.com/pt/
-$ npm install--save  @material-ui/lab
+$ npm install --save @mui/icons-material
 
 # Componentes de gráficos
 $ npm install --save  react-google-charts
-
-# Comopentes do PrimeReact
-$ npm install -- save primereact
-
-# Componentes de icones do PrimeReact
-$ npm install --save primeicons
-
-# Biblioteca de estilização do PrimeReact
-$ npm install --save primeflex@2.0.0
 
 # Redux compartilha estados entre componentes
 $ npm install --save redux react-redux redux-thunk
@@ -60,7 +54,6 @@ $ npm install --save date-fns
 
 # Validar o e-mail
 $ npm install --save validator
-
 
 ### Autenticação Base64
 $ npm install --save base-64

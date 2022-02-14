@@ -1,4 +1,4 @@
-import { BUSCAR_PERMISSOES, LIMPAR_PERMISSOES } from '../../core/store/types/permissao';
+import { BUSCAR_PERMISSOES, LIMPAR_PERMISSOES } from '../types/permissao';
 
 const reducersPermissao = (state = {}, action) => {
     switch (action.type) {
@@ -8,6 +8,7 @@ const reducersPermissao = (state = {}, action) => {
                 permissoes: action.payload,
             }
         case LIMPAR_PERMISSOES:
+            console.log('limpar reducer')
             return {
                 ...state,
                 permissoes: null,

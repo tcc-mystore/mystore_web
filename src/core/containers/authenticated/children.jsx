@@ -1,26 +1,24 @@
 import React from 'react';
-import BarraDeFerramentas from '../../../views/components/BarraDeFerramentas';
-import BarraDeMenu from '../../../views/components/BarraDeMenu';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import * as  actionsUsuario from '../../../domain/actions/actionsUsuario';
+import BarraDeFerramentas from '../../../views/components/BarraDeFerramentas';
+import BarraDeMenu from '../../../views/components/BarraDeMenu';
+import './index.css';
 
 const AuthenticatedChildren = (props) => {
+    const [menuAberto, setMenuAberto] = useState(true);
 
     return (
         <>
-            <div className="p-grid">
-                <div className="p-col-12">
-                    <BarraDeFerramentas handleLogout={props.children.props.handleLogout} dadosUsuario={props.children.props.usuario} />
-                </div>
-                <div className="p-col-2">
-                    <BarraDeMenu />
-                </div>
-                <div className="p-col-10">
-                    <main>
+            <BarraDeFerramentas handleLogout={props.handleLogout} dadosUsuario={props.children} alternarMenu={() => setMenuAberto(!menuAberto)} />
+            <div className="d-flex">
+                <BarraDeMenu handleLogout={props.handleLogout} ativo={menuAberto} />
+                <div className="content p-1">
+                    <div className="list-group-item">
                         {props.children}
-                    </main>
+                    </div>
                 </div>
-                <div className="p-col-12">12</div>
             </div>
         </>
     );

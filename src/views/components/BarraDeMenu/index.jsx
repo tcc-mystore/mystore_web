@@ -1,48 +1,20 @@
-import React, { useRef, useState } from 'react';
-import { Menu } from 'primereact/menu';
-import { Toast } from 'primereact/toast';
-import { Redirect } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
-const BarraDeMenu = () => {
-    const toast = useRef(null);
-    const [irPara, setIrPara] = useState(null);
-    const items = [
-        {
-            label: 'Painel de Controle',
-            items: [
-                {
-                    label: 'Usuário',
-                    icon: 'pi pi-users',
-                    command: () => {
-                        toast.current.show({ severity: 'success', summary: 'Usuários', detail: 'Tela de gerenciamento de usuários!', life: 3000 });
-                    }
-                },
-                {
-                    label: 'Permissões',
-                    icon: 'pi pi-lock',
-                    command: () => {
-                        setIrPara(`listar-permissoes`);
-                    }
-                }
-            ]
-        },
-    ];
+const BarraDeMenu = ({ handleLogout, ativo }) => {
+    return (
+        <>
+            <nav className={ativo ? "sidebar bg-secondary" : "sidebar bg-secondary toggled"}>
+                <ul className="list-unstyled">
+                    <li><Link to="/mystore/listar-permissoes"><SupervisedUserCircleIcon /> Permissões</Link></li>
+                    <li><Link to="#" onClick={() => handleLogout()}><MeetingRoomIcon /> Sair</Link></li>
+                </ul>
+            </nav>
 
-    if (irPara) {
-        return <Redirect to={{ pathname: `/mystore/${irPara}` }} />
-    } else {
-        return (
-            <>
-                <div>
-                    <Toast ref={toast}></Toast>
-                    <div className="card">
-                        <Menu model={items} />
-                    </div>
-                </div>
-            </>
-        );
-    }
-
+        </>
+    );
 }
 
 export default BarraDeMenu;

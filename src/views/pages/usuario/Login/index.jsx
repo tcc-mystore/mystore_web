@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import ModalCarregando from '../../../components/ModalCarregando';
+import React, { useState, useEffect } from 'react';
+import { Form, FormGroup, Input, InputGroup, InputGroupText } from 'reactstrap';
 import Alerta from '../../../components/Alerta';
-import { InputText } from 'primereact/inputtext';
-import { Password } from 'primereact/password';
-import { Button } from 'primereact/button';
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../../../../assets/images/logo.png';
+import BotaoLogin from '../../../components/BotaoLogin';
 
 const Login = (props) => {
 
@@ -27,11 +25,11 @@ const Login = (props) => {
                     setMensagem(retorno.erro.mensagem);
                 }
                 if (retorno.erro.status === 401) {
-                    setAlerta("warn");
+                    setAlerta("warning");
                     setMensagem("Acesso negado!");
                 }
                 if (retorno.erro.error_description === 'Bad credentials') {
-                    setAlerta("warn");
+                    setAlerta("warning");
                     setMensagem("Email ou senha inválido!");
                 }
                 setAguardando(false);
@@ -52,51 +50,44 @@ const Login = (props) => {
         }// eslint-disable-next-line
     }, [])
 
-    if (aguardando)
-        return <ModalCarregando aguardando={aguardando} pagina="Entrando no sistema" />
-    else
-        return (
-            <>
+    return (
+        <>
+            <Form onSubmit={logar} className="form-signin text-center">
+                <img className="mb-4" src={logo} alt="Logo MyStore" width="200" height="200" />
+                <h1 className="h3 mb-3 font-weight-normal">Login</h1>
                 {mensagem ? <Alerta tipoAlerta={alerta} mensagem={mensagem} /> : null}
-                <h3 className="p-text-center">Login</h3>
-                <form noValidate onSubmit={logar}>
-                    <div className="p-field p-mt-1">
-                        <span className="p-float-label p-input-icon-right">
-                            <i className="pi pi-envelope" />
-                            <InputText
-                                id="email"
-                                name="email"
-                                value={email}
-                                onChange={(ev) => setEmail(ev.target.value)}
-                                className='email'
-                            />
-                            <label htmlFor="email" className='email'>Email*</label>
-                        </span>
-                    </div>
-                    <br />
-                    <div className="p-field">
-                        <span className="p-float-label">
-                            <Password
-                                id="password"
-                                name="password"
-                                value={senha}
-                                onChange={(ev) => setSenha(ev.target.value)}
-                                className='password'
-                                toggleMask
-                            />
-                            <label htmlFor="password" className='password'>Senha*</label>
-                        </span>
-                    </div>
-                    <div className='p-mt-1'>
-                        <Button type="submit" label="Entrar" icon="pi pi-unlock" className='p-mt-2' iconPos="left" disabled={!email || !senha} />
-                    </div>
-                    <div className='p-d-flex p-jc-between p-mt-1'>
-                        <Link to={{ pathname: '/mystore/recuperar-senha', state: { email } }} className="p-mb-2" style={{ textDecoration: 'none' }}>Recuperar senha</Link>
-                        <Link to={{ pathname: '/mystore/validar-conta', state: { email } }} className="p-mb-2" style={{ textDecoration: 'none' }}>Validar conta</Link>
-                    </div>
-                </form>
-            </>
-        );
+                <FormGroup>
+                    <InputGroup>
+                        <InputGroupText>E-mail</InputGroupText>
+                        <Input
+                            type="email"
+                            value={email}
+                            name="email"
+                            id="email"
+                            placeholder="E-mail do usuário"
+                            onChange={(ev) => setEmail(ev.target.value)} required />
+                    </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                    <InputGroup>
+                        <InputGroupText style={{ height: 46 }}>Senha</InputGroupText>
+                        <Input
+                            type="password"
+                            value={senha}
+                            name="senha"
+                            id="senha"
+                            placeholder="Senha do usuário"
+                            onChange={(ev) => setSenha(ev.target.value)} required />
+                    </InputGroup>
+                </FormGroup>
+                <BotaoLogin aguardando={aguardando} desabilitado={!email || !senha}/>
+                <div className='d-flex justify-content-between p-mt-1'>
+                    <Link to={{ pathname: '/mystore/recuperar-senha', state: { email } }} className="p-mb-2" style={{ textDecoration: 'none' }}>Recuperar senha</Link>
+                    <Link to={{ pathname: '/mystore/validar-conta', state: { email } }} className="p-mb-2" style={{ textDecoration: 'none' }}>Validar conta</Link>
+                </div>
+            </Form>
+        </>
+    );
 }
 
 export default Login;

@@ -22,11 +22,3 @@ export const buscarToken = () => {
         return `${token1}.${token2}.${token3}`;
     }
 }
-
-export const headers = () => {
-    return {
-        'headers': {
-            'Authorization': `Bearer ${buscarToken()}`
-        }
-    }
-}

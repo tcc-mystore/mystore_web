@@ -1,1 +1,0 @@
-export const TOKEN_MANAGER = 'TOKEN_MANAGER';
