@@ -33,9 +33,12 @@ $ npm install --save bootstrap
 $ npm install --save reactstrap
 
 # Material-UI a biblioteca de componentes React UI: https://material-ui.com/pt/
-$ npm install @mui/icons-material
+$ npm install --save @mui/material
 $ npm install --save @emotion/react 
 $ npm install --save @emotion/styled
+
+# Instalar a biblioteca de icones
+$ npm install --save @mui/icons-material
 
 #Instalar a biblioteca de icones
 $ npm install --save @material-ui/icons
@@ -46,9 +49,6 @@ $ npm install --save  react-google-charts
 
 # Material-UI a biblioteca de componentes React UI: https://material-ui.com/pt/
 $ npm install --save @material-ui/core
-
-# Instalar a biblioteca de icones
-$ npm install --save @material-ui/icons
 
 # Instalar a biblioteca de componentes React UI: https://material-ui.com/pt/
 $ npm install--save  @material-ui/lab
@@ -64,7 +64,6 @@ $ npm install --save date-fns
 
 # Validar o e-mail
 $ npm install --save validator
-
 
 ### Autenticação Base64
 $ npm install --save base-64
