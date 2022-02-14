@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProgressSpinner } from 'primereact/progressspinner';
+import { Spinner } from 'reactstrap';
 import './index.css';
 
 const ModalCarregando = (props) => {
@@ -9,33 +9,21 @@ const ModalCarregando = (props) => {
                 <div className="carregamento">
                     <main className="conteudo">
                         <div className="subconteudo">
-                            <ProgressSpinner
-                                strokeWidth="8"
+                            <Spinner
+                                color="light"
                                 style={
                                     {
-                                        width: '5rem', height: '5rem',
-                                        color: '#FFF'
+                                        width: '5rem', height: '5rem'
                                     }
-                                }
-                            />
+                                } />
                         </div>
                         <div className="subconteudo">
-                            <h1 style={
-                                {
-                                    //    width: '5rem', height: '5rem', 
-                                    color: '#FFF'
-                                }
-                            } >
+                            <h3 className="m-0 font-weight-bold text-light">
                                 Carregando...
-                            </h1>
+                        </h3>
                         </div>
                         <div className="subconteudo">
-                            <h3 style={
-                                {
-                                    //    width: '5rem', height: '5rem', 
-                                    color: '#FFF'
-                                }
-                            }>
+                            <h3 className="m-0 font-weight-bold text-light">
                                 {props.pagina}
                             </h3>
                         </div>

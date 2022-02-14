@@ -1,12 +1,7 @@
-import { BUSCAR_USUARIO, LIMPAR_USUARIO, LIMPAR_USUARIOS, LISTAR_USUARIOS, LOGIN_USUARIO, LOGOUT_USUARIO, PESQUISAR_USUARIOS } from '../../core/store/types';
+import { LIMPAR_USUARIO, LIMPAR_USUARIOS, LOGIN_USUARIO, LOGOUT_USUARIO, PERFIL_USUARIO } from '../types/usuario';
 
 const reducersUsuario = (state = {}, action) => {
     switch (action.type) {
-        case BUSCAR_USUARIO:
-            return {
-                ...state,
-                usuario: action.payload.usuario,
-            }
         case LIMPAR_USUARIO:
             return {
                 ...state,
@@ -15,18 +10,12 @@ const reducersUsuario = (state = {}, action) => {
         case LIMPAR_USUARIOS:
             return {
                 ...state,
-                usuarios: null,
-                usuariosPesquisados: null
-            }
-        case LISTAR_USUARIOS:
-            return {
-                ...state,
-                usuarios: action.payload.usuarios,
+                usuarios: null
             }
         case LOGIN_USUARIO:
             return {
                 ...state,
-                usuarioLogado: action.payload.usuarioLogado,
+                usuarioLogado: action.payload,
                 authorized: true
             }
         case LOGOUT_USUARIO:
@@ -35,11 +24,12 @@ const reducersUsuario = (state = {}, action) => {
                 usuarioLogado: null,
                 authorized: false
             }
-        case PESQUISAR_USUARIOS:
-            return {
-                ...state,
-                usuariosPesquisados: action.payload.usuarios,
-            }
+            case PERFIL_USUARIO:
+                return {
+                    ...state,
+                    perfilUsuario: action.payload,
+                    authorized: true
+                }
         default:
             return state;
     }
