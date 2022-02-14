@@ -34,8 +34,20 @@ $ npm install --save @material-ui/core
 # Instalar a biblioteca de icones
 $ npm install --save @material-ui/icons
 
+# Instalar a biblioteca de componentes React UI: https://material-ui.com/pt/
+$ npm install--save  @material-ui/lab
+
 # Componentes de gráficos
 $ npm install --save  react-google-charts
+
+# Comopentes do PrimeReact
+$ npm install -- save primereact
+
+# Componentes de icones do PrimeReact
+$ npm install --save primeicons
+
+# Biblioteca de estilização do PrimeReact
+$ npm install --save primeflex@2.0.0
 
 # Redux compartilha estados entre componentes
 $ npm install --save redux react-redux redux-thunk
@@ -48,6 +60,10 @@ $ npm install --save date-fns
 
 # Validar o e-mail
 $ npm install --save validator
+
+
+### Autenticação Base64
+$ npm install --save base-64
 
 # Rodar o projeto
 $ npm start
