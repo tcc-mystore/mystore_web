@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Spinner, Tooltip } from 'reactstrap';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const BotaoApagar = (props) => {
     const [tooltipOpen, setTooltipOpen] = useState(false);

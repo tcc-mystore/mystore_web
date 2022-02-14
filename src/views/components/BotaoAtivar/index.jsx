@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Tooltip } from 'reactstrap';
-import CheckIcon from '@material-ui/icons/Check';
+import CheckIcon from '@mui/icons-material/Check';
 
 const BotaoAtivar = (props) => {
     const [tooltipOpen, setTooltipOpen] = useState(false);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Tooltip } from 'reactstrap';
-import PrintIcon from '@material-ui/icons/Print';
+import PrintIcon from '@mui/icons-material/Print';
 
 const BotaoImprimir = (props) => {
     return (

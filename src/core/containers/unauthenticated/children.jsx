@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../assets/layout/login/index.css';
+import './index.css';
 
 const UnauthenticatedChildren = (props) => {
     return (

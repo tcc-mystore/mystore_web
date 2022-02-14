@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Tooltip } from 'reactstrap';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const BotaoVisualizar = (props) => {
     const [tooltipOpen, setTooltipOpen] = useState(false);

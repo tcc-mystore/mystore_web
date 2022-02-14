@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Spinner, Tooltip } from 'reactstrap';
-import SendIcon from '@material-ui/icons/Send';
+import SendIcon from '@mui/icons-material/Send';
 
 const BotaoEnviar = (props) => {
     const [tooltipOpen, setTooltipOpen] = useState(false);

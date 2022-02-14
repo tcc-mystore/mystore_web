@@ -1,32 +1,29 @@
 
-import React, { useEffect, useState } from 'react';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
+import React, { useState } from 'react';
 import ModalCarregando from '../../../components/ModalCarregando';
 import { connect, useSelector } from 'react-redux';
 import * as  actionsPermissao from '../../../../domain/actions/actionsPermissao';
-import { InputText } from 'primereact/inputtext';
-import { Calendar } from 'primereact/calendar';
+import { Label, FormGroup, Input, UncontrolledButtonDropdown, DropdownMenu, DropdownToggle } from 'reactstrap';
+import BotaoPesquisar from '../../../components/BotaoPesquisar';
+import BotaoVisualizar from '../../../components/BotaoVisualizar';
+import BotaoEditar from '../../../components/BotaoEditar';
+import BotaoAtivar from '../../../components/BotaoAtivar';
+import BotaoDesativar from '../../../components/BotaoDesativar';
+import BotaoExcluir from '../../../components/BotaoExcluir';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const Listar = (props) => {
 
     const [permissoes, setPermissoes] = useState([]);
+    const [pesquisando, setPesquisando] = useState(false);
     const { permissao } = useSelector((state) => state);
 
-    useEffect(() => {
-        listarPermissoes();
-        // eslint-disable-next-line
-    }, [permissao.permissoes]);
-
-    useEffect(() => {
-        return () => limparPermissoes();
-        // eslint-disable-next-line
-    }, []);
-
     const listarPermissoes = async () => {
+        setPesquisando(true);
         await props.getPermissoes();
         if (permissao.permissoes) {
             setPermissoes(permissao.permissoes._embedded.permissoes)
+            setPesquisando(false);
         }
     }
 
@@ -35,52 +32,126 @@ const Listar = (props) => {
         await props.limparPermissoes();
     }
 
-    if (!permissao.permissoes)
-        return <ModalCarregando aguardando={true} pagina="Listando as permissões do sistema." />
-    else
-        return (
-            <div>
-                <div className="card">
-                    <div className="p-fluid grid">
-                        <div className=" md:col-4">
-                            <label htmlFor="basic">Basic</label>
-                            <InputText />
-                        </div>
-                        <div className=" md:col-4">
-
-                            <label htmlFor="basic">Basic</label>
-                            <InputText />
-                        </div>
-                        <div className=" md:col-4">
-
-                            <label htmlFor="basic">Basic</label>
-                            <InputText />
+    const opcoes = (dado) => {
+        if (dado._links) {
+            return (
+                <>
+                    <span className="d-none d-md-block">
+                        <BotaoVisualizar uri={`/permissao-visualizar/${dado.id}`} />
+                        {/* <BotaoImprimir onClick /> */}
+                        <BotaoEditar uri={`/permissao-alterar/${dado.id}`} />
+                        {dado.ativo ? <BotaoDesativar onClick={() => this.abrirConfirmarDesativacao(dado.id)} /> : <BotaoAtivar onClick={() => this.abrirConfirmarAtivacao(dado.id)} />}
+                        <BotaoExcluir onClick={() => this.abrirConfirmarExclusao(dado.id)} />
+                    </span>
+                    <div className="dropdown d-block d-md-none">
+                        <UncontrolledButtonDropdown>
+                            <DropdownToggle outline size="sm">
+                                <MoreVertIcon />
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <BotaoVisualizar uri={`/permissao-visualizar/${dado.id}`} />
+                                {/* <BotaoImprimir onClick /> */}
+                                <BotaoEditar uri={`/permissao-alterar/${dado.id}`} />
+                                {dado.ativo ? <BotaoDesativar onClick={() => this.abrirConfirmarDesativacao(dado.id)} /> : <BotaoAtivar onClick={() => this.abrirConfirmarAtivacao(dado.id)} />}
+                                <BotaoExcluir onClick={() => this.abrirConfirmarExclusao(dado.id)} />
+                            </DropdownMenu>
+                        </UncontrolledButtonDropdown>
+                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
                         </div>
                     </div>
-                    <DataTable value={permissoes} responsiveLayout="scroll">
-                        <Column field="id" header="Código"></Column>
-                        <Column field="descricao" header="Descricao"></Column>
-                        <Column field="nome" header="Nome Técnico"></Column>
-                    </DataTable>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <span className="d-none d-md-block">
+                        Não há opções!
+                    </span>
+                </>
+            )
+        }
+    }
+
+    return (
+        <>
+            <div className="form-group row">
+                <div className="col-sm-4">
+                    <FormGroup>
+                        <Label for="nome">Código</Label>
+                        <Input
+                            type="number"
+                            //value={nome}
+                            name="codigo"
+                            id="codigo"
+                            autoComplete="codigo"
+                            //onChange={(ev) => this.onChangeInput("codigo", ev)}
+                            placeholder="Filtar pelo código" />
+                    </FormGroup>
                 </div>
-                <div className="card">
-                <h5>Popup</h5>
-                <div className="p-fluid grid formgrid">
-                    <div className="field col-12 md:col-4">
-                        <label htmlFor="basic">Basic</label>
-                        <Calendar id="basic" />
-                    </div>
-                    <div className="field col-12 md:col-4">
-                        <label htmlFor="icon">Icon</label>
-                        <Calendar id="icon" showIcon />
-                    </div>
-                    <div className="field col-12 md:col-4">
-                        <label htmlFor="spanish">Spanish</label>
-                        <Calendar id="spanish"  dateFormat="dd/mm/yy" />
-                    </div>
-                    </div> </div>
+                <div className="col-sm-4">
+                    <FormGroup>
+                        <Label for="usuarioEmail">Descrição</Label>
+                        <Input
+                            id="descricao"
+                            name="text"
+                            //onChange={(ev) => this.onChangeInput("email", ev)}
+                            type="descricao"
+                            //value={email}
+                            autoComplete="descricao"
+                            placeholder="Filtrar por descrição" />
+                    </FormGroup>
+                </div>
+                <div className="col-sm-2">
+                    <FormGroup>
+                        <Label for="nome">Nome Técnico</Label>
+                        <Input type="text" name="nome" id="nome" placeholder="Nome técnico"
+                        //value={this.state.dataInicial} 
+                        //onChange={(ev) => this.ajustaDataInicio(ev.target.value)}
+                        />
+                    </FormGroup>
+                </div>
             </div>
-        );
+            <div className="form-group row">
+                <div className="col-sm-2">
+                    <FormGroup>
+                        <BotaoPesquisar onClickPesquisar={() => {
+                            limparPermissoes();
+                            listarPermissoes();
+                        }} />
+                    </FormGroup>
+                </div>
+            </div>
+            <div className="table-responsive">
+                {pesquisando && <ModalCarregando aguardando={true} pagina="Listando as permissões do sistema." />}
+                <table className="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th className="d-none d-sm-table-cell">Código</th>
+                            <th>Descrição</th>
+                            <th className="d-none d-sm-table-cell">Nome Técnico</th>
+                            <th className="text-center">Opções</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            permissoes.map(
+                                (dado) => (
+                                    <tr key={dado.id} >
+                                        <th className="d-none d-sm-table-cell">{dado.id}</th>
+                                        <th>{dado.descricao}</th>
+                                        <td className="d-none d-sm-table-cell">{dado.nome}</td>
+                                        <td className="text-center">
+                                            {opcoes(dado)}
+                                        </td>
+                                    </tr>
+                                )
+                            )
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </>
+    );
 }
 
 export default connect(null, actionsPermissao)(Listar);

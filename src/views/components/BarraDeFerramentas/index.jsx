@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { useSelector } from 'react-redux';
 import iconeUsuario from '../../../assets/images/icone_usuario.png';
-import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
-import '../../../assets/layout/barra-de-ferramentas/index.css';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import './index.css';
 
 const BarraDeFerramentas = ({ handleLogout, alternarMenu }) => {
     const {perfilUsuario} = useSelector((state)=>state.usuario)

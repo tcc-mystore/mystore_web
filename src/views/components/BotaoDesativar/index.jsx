@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Tooltip } from 'reactstrap';
-import BlockIcon from '@material-ui/icons/Block';
+import BlockIcon from '@mui/icons-material/Block';
 
 const BotaoDesativar = (props) => {
     const [tooltipOpen, setTooltipOpen] = useState(false);

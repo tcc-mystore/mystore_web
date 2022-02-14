@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tooltip } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@mui/icons-material/Add';
 
 const BotaoCadastrar = (props) => {
     const [tooltipOpen, setTooltipOpen] = useState(false);

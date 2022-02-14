@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Spinner, Tooltip } from 'reactstrap';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 
 const BotaoLogin = (props) => {
     const [tooltipOpen, setTooltipOpen] = useState(false);

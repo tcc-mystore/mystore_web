@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Tooltip } from 'reactstrap';
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 const Relatorio = (props) => {
     return (

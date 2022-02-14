@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as  actionsUsuario from '../../../domain/actions/actionsUsuario';
 import BarraDeFerramentas from '../../../views/components/BarraDeFerramentas';
 import BarraDeMenu from '../../../views/components/BarraDeMenu';
-import '../../../assets/layout/painelDeControle/index.css';
+import './index.css';
 
 const AuthenticatedChildren = (props) => {
     const [menuAberto, setMenuAberto] = useState(true);

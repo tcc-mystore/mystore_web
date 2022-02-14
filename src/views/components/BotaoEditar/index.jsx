@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Tooltip } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from '@mui/icons-material/Edit';
 
 const BotaoEditar = (props) => {
     const [tooltipOpen, setTooltipOpen] = useState(false);
