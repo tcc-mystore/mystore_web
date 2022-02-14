@@ -40,15 +40,8 @@ $ npm install --save @emotion/styled
 # Instalar a biblioteca de icones
 $ npm install --save @mui/icons-material
 
-#Instalar a biblioteca de icones
-$ npm install --save @material-ui/icons
-$ npm install --save @material-ui/core
-
 # Componentes de gráficos
 $ npm install --save  react-google-charts
-
-# Material-UI a biblioteca de componentes React UI: https://material-ui.com/pt/
-$ npm install --save @material-ui/core
 
 # Instalar a biblioteca de componentes React UI: https://material-ui.com/pt/
 $ npm install--save  @material-ui/lab
