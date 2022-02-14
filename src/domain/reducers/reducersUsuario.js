@@ -1,4 +1,4 @@
-import { LIMPAR_USUARIO, LIMPAR_USUARIOS, LOGIN_USUARIO, LOGOUT_USUARIO, PERFIL_USUARIO } from '../../core/store/types/usuario';
+import { LIMPAR_USUARIO, LIMPAR_USUARIOS, LOGIN_USUARIO, LOGOUT_USUARIO, PERFIL_USUARIO } from '../types/usuario';
 
 const reducersUsuario = (state = {}, action) => {
     switch (action.type) {

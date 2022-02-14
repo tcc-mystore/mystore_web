@@ -1,6 +1,6 @@
-import { BUSCAR_PERMISSOES, LIMPAR_PERMISSOES } from '../../core/store/types/permissao';
+import { BUSCAR_PERMISSOES, LIMPAR_PERMISSOES } from '../types/permissao';
 import { api } from '../../core/api';
-import { buscarToken } from '../../core/store/localStorage';
+import { buscarToken } from '../../core/storage';
 
 export const getPermissoes = () => {
     return (dispatch) => {
