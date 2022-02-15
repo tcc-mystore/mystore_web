@@ -8,7 +8,6 @@ const reducersPermissao = (state = {}, action) => {
                 permissoes: action.payload,
             }
         case LIMPAR_PERMISSOES:
-            console.log('limpar reducer')
             return {
                 ...state,
                 permissoes: null,
