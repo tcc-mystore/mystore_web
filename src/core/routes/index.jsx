@@ -11,6 +11,7 @@ import RecuperarSenha from '../../views/pages/usuario/RecuperarSenha';
 import PaginaInexistente from '../../views/pages/mystore/PaginaInexistente';
 import PaginaInicial from '../../views/pages/mystore/PaginaInicial';
 import ListarPermissoes from '../../views/pages/permissao/Listar';
+import ListarEmpresas from '../../views/pages/empresa/Listar';
 
 const history = createBrowserHistory();
 
@@ -27,6 +28,7 @@ const Routes = () => {
                         {/* Páginas com autenticação */}
                         <Route path="/mystore/pagina-inicial" exact component={Authenticated(PaginaInicial)} />
                         <Route path="/mystore/listar-permissoes" exact component={Authenticated(ListarPermissoes)} />
+                        <Route path="/mystore/listar-empresas" exact component={Authenticated(ListarEmpresas)} />
                         {/* Qualquer página que não esteja dentro das rotas especificadas */}
                         <Route path="/mystore/pagina-inexistente" exact component={PaginaInexistente} />
                         <Redirect from="*" to="/mystore/pagina-inexistente" />
