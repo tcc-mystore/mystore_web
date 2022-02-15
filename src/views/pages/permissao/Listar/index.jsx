@@ -1,16 +1,10 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ModalCarregando from '../../../components/ModalCarregando';
 import { connect, useSelector } from 'react-redux';
 import * as  actionsPermissao from '../../../../domain/actions/actionsPermissao';
-import { Label, FormGroup, Input, UncontrolledButtonDropdown, DropdownMenu, DropdownToggle } from 'reactstrap';
+import { Label, FormGroup, Input, Button } from 'reactstrap';
 import BotaoPesquisar from '../../../components/BotaoPesquisar';
-import BotaoVisualizar from '../../../components/BotaoVisualizar';
-import BotaoEditar from '../../../components/BotaoEditar';
-import BotaoAtivar from '../../../components/BotaoAtivar';
-import BotaoDesativar from '../../../components/BotaoDesativar';
-import BotaoExcluir from '../../../components/BotaoExcluir';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const Listar = (props) => {
 
@@ -21,14 +15,18 @@ const Listar = (props) => {
     const listarPermissoes = async () => {
         setPesquisando(true);
         await props.getPermissoes();
+    }
+
+    // eslint-disable-next-line
+    useEffect(() => {
         if (permissao.permissoes) {
             setPermissoes(permissao.permissoes._embedded.permissoes)
             setPesquisando(false);
         }
-    }
+    });
 
     const limparPermissoes = async () => {
-        console.log('limpando a tela');
+        setPermissoes([]);
         await props.limparPermissoes();
     }
 
@@ -37,28 +35,7 @@ const Listar = (props) => {
             return (
                 <>
                     <span className="d-none d-md-block">
-                        <BotaoVisualizar uri={`/permissao-visualizar/${dado.id}`} />
-                        {/* <BotaoImprimir onClick /> */}
-                        <BotaoEditar uri={`/permissao-alterar/${dado.id}`} />
-                        {dado.ativo ? <BotaoDesativar onClick={() => this.abrirConfirmarDesativacao(dado.id)} /> : <BotaoAtivar onClick={() => this.abrirConfirmarAtivacao(dado.id)} />}
-                        <BotaoExcluir onClick={() => this.abrirConfirmarExclusao(dado.id)} />
                     </span>
-                    <div className="dropdown d-block d-md-none">
-                        <UncontrolledButtonDropdown>
-                            <DropdownToggle outline size="sm">
-                                <MoreVertIcon />
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <BotaoVisualizar uri={`/permissao-visualizar/${dado.id}`} />
-                                {/* <BotaoImprimir onClick /> */}
-                                <BotaoEditar uri={`/permissao-alterar/${dado.id}`} />
-                                {dado.ativo ? <BotaoDesativar onClick={() => this.abrirConfirmarDesativacao(dado.id)} /> : <BotaoAtivar onClick={() => this.abrirConfirmarAtivacao(dado.id)} />}
-                                <BotaoExcluir onClick={() => this.abrirConfirmarExclusao(dado.id)} />
-                            </DropdownMenu>
-                        </UncontrolledButtonDropdown>
-                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
-                        </div>
-                    </div>
                 </>
             )
         } else {
@@ -75,7 +52,7 @@ const Listar = (props) => {
     return (
         <>
             <div className="form-group row">
-                <div className="col-sm-4">
+                <div className="col-sm-2">
                     <FormGroup>
                         <Label for="nome">Código</Label>
                         <Input
@@ -88,7 +65,7 @@ const Listar = (props) => {
                             placeholder="Filtar pelo código" />
                     </FormGroup>
                 </div>
-                <div className="col-sm-4">
+                <div className="col-sm-5">
                     <FormGroup>
                         <Label for="usuarioEmail">Descrição</Label>
                         <Input
@@ -101,7 +78,7 @@ const Listar = (props) => {
                             placeholder="Filtrar por descrição" />
                     </FormGroup>
                 </div>
-                <div className="col-sm-2">
+                <div className="col-sm-5">
                     <FormGroup>
                         <Label for="nome">Nome Técnico</Label>
                         <Input type="text" name="nome" id="nome" placeholder="Nome técnico"
@@ -118,6 +95,11 @@ const Listar = (props) => {
                             limparPermissoes();
                             listarPermissoes();
                         }} />
+                    </FormGroup>
+                </div>
+                <div className="col-sm-1">
+                    <FormGroup>
+                        <Button onClick={limparPermissoes} >Limpar</Button>
                     </FormGroup>
                 </div>
             </div>
