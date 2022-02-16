@@ -30,7 +30,7 @@ const EmpresaAlterar = (props) => {
     }, []);
 
     const receberDadosEmpresa = async (id) => {
-        await props.getEmpresa({id});
+        await props.getEmpresa({ id });
         if (state.empresa) {
             setId(state.empresa.id);
             setNome(state.empresa.nome);
@@ -81,21 +81,22 @@ const EmpresaAlterar = (props) => {
             {console.log(state.empresa)}
 
             {!state.empresa && <ModalCarregando aguardando={true} pagina="Buscando informações da empresa." />}
-            <div className="d-flex">
+            <div className="d-flex justify-content-between">
                 <div className="mr-auto p-2">
                     <h2 className="display-4 titulo">Alterar Empresa</h2>
                 </div>
-                <Link to={"/mystore/listar-empresas"}>
-                    <button className="btn btn-outline-success btn-sm">
-                        Listar
-                    </button>
-                </Link>
-
-                <Link to={`/mystore/visualizar-empresa/${props.match.params.id}`}>
-                    <button className="ml-1 btn btn-outline-info btn-sm">
-                        Visualisar
-                    </button>
-                </Link>
+                <div className="mr-auto p-2">
+                    <Link to={"/mystore/listar-empresas"}>
+                        <button className="btn btn-outline-success btn-sm">
+                            Listar
+                        </button>
+                    </Link>
+                    <Link to={`/mystore/visualizar-empresa/${props.match.params.id}`}>
+                        <button className="ml-1 btn btn-outline-info btn-sm">
+                            Visualisar
+                        </button>
+                    </Link>
+                </div>
             </div>
             <hr />
             {mensagem ? <Alerta tipoAlerta={alerta} mensagem={mensagem} /> : null}

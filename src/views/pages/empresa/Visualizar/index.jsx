@@ -25,21 +25,22 @@ const EmpresaVisualizar = (props) => {
 
     return (
         <>
-            <div className="d-flex">
+            <div className="d-flex justify-content-between">
                 <div className="mr-auto p-2">
                     <h2 className="display-4 titulo">Detalhes da Empresa</h2>
                 </div>
-                <Link to={"/mystore/listar-empresas"}>
-                    <button className="btn btn-outline-success btn-sm">
-                        Listar
-                    </button>
-                </Link>
-
-                <Link to={`/mystore/alterar-empresa/${props.match.params.id}`}>
-                    <button className="ml-1 btn btn-outline-warning btn-sm">
-                        Editar
-                    </button>
-                </Link>
+                <div className="mr-auto p-2">
+                    <Link to={"/mystore/listar-empresas"}>
+                        <button className="btn btn-outline-success btn-sm">
+                            Listar
+                        </button>
+                    </Link>
+                    <Link to={`/mystore/alterar-empresa/${props.match.params.id}`}>
+                        <button className="ml-1 btn btn-outline-warning btn-sm">
+                            Editar
+                        </button>
+                    </Link>
+                </div>
             </div>
             <hr />
             {
