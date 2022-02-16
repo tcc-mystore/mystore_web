@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import ModalCarregando from '../../../components/ModalCarregando';
 import { connect, useSelector } from 'react-redux';
 import * as  actionsPermissao from '../../../../domain/actions/actionsPermissao';
-import { Label, FormGroup, Input, Button } from 'reactstrap';
+import { FormGroup, Button } from 'reactstrap';
 import BotaoPesquisar from '../../../components/BotaoPesquisar';
 
 const Listar = (props) => {
@@ -51,43 +51,6 @@ const Listar = (props) => {
 
     return (
         <>
-            <div className="form-group row">
-                <div className="col-sm-2">
-                    <FormGroup>
-                        <Label for="nome">Código</Label>
-                        <Input
-                            type="number"
-                            //value={nome}
-                            name="codigo"
-                            id="codigo"
-                            autoComplete="codigo"
-                            //onChange={(ev) => this.onChangeInput("codigo", ev)}
-                            placeholder="Filtar pelo código" />
-                    </FormGroup>
-                </div>
-                <div className="col-sm-5">
-                    <FormGroup>
-                        <Label for="usuarioEmail">Descrição</Label>
-                        <Input
-                            id="descricao"
-                            name="text"
-                            //onChange={(ev) => this.onChangeInput("email", ev)}
-                            type="descricao"
-                            //value={email}
-                            autoComplete="descricao"
-                            placeholder="Filtrar por descrição" />
-                    </FormGroup>
-                </div>
-                <div className="col-sm-5">
-                    <FormGroup>
-                        <Label for="nome">Nome Técnico</Label>
-                        <Input type="text" name="nome" id="nome" placeholder="Nome técnico"
-                        //value={this.state.dataInicial} 
-                        //onChange={(ev) => this.ajustaDataInicio(ev.target.value)}
-                        />
-                    </FormGroup>
-                </div>
-            </div>
             <div className="form-group row">
                 <div className="col-sm-2">
                     <FormGroup>
