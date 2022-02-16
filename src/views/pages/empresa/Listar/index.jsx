@@ -41,8 +41,8 @@ const Listar = (props) => {
             return (
                 <>
                     <span className="d-none d-md-block">
-                        <BotaoVisualizar uri={`/empresa-visualizar/${dado.id}`} />
-                        <BotaoEditar uri={`/empresa-alterar/${dado.id}`} />
+                        <BotaoVisualizar uri={`/mystore/visualizar-empresa/${dado.id}`} />
+                        <BotaoEditar uri={`/mystore/alterar-empresa/${dado.id}`} />
                         {dado.ativo ? <BotaoDesativar onClick={() => {
                             // abrirConfirmarDesativacao(dado.id)
                         }} /> : <BotaoAtivar onClick={() => {
@@ -58,8 +58,8 @@ const Listar = (props) => {
                                 <MoreVertIcon />
                             </DropdownToggle>
                             <DropdownMenu>
-                                <BotaoVisualizar uri={`/empresa-visualizar/${dado.id}`} />
-                                <BotaoEditar uri={`/empresa-alterar/${dado.id}`} />
+                                <BotaoVisualizar uri={`/mystore/visualizar-empresa/${dado.id}`} />
+                                <BotaoEditar uri={`/mystore/alterar-empresa/${dado.id}`} />
                                 {dado.ativo ? <BotaoDesativar onClick={() => {
                                     // abrirConfirmarDesativacao(dado.id)
                                 }} /> : <BotaoAtivar onClick={() => {
@@ -99,7 +99,7 @@ const Listar = (props) => {
                             id="codigo"
                             autoComplete="codigo"
                             //onChange={(ev) => this.onChangeInput("codigo", ev)}
-                            placeholder="Filtar pelo código" />
+                            placeholder="Filtar pelo código" disabled/>
                     </FormGroup>
                 </div>
                 <div className="col-sm-5">
@@ -112,7 +112,7 @@ const Listar = (props) => {
                             type="descricao"
                             //value={email}
                             autoComplete="descricao"
-                            placeholder="Filtrar por descrição" />
+                            placeholder="Filtrar por descrição" disabled/>
                     </FormGroup>
                 </div>
                 <div className="col-sm-5">
@@ -121,7 +121,7 @@ const Listar = (props) => {
                         <Input type="text" name="nome" id="nome" placeholder="Nome técnico"
                         //value={this.state.dataInicial} 
                         //onChange={(ev) => this.ajustaDataInicio(ev.target.value)}
-                        />
+                        disabled/>
                     </FormGroup>
                 </div>
             </div>
@@ -141,7 +141,7 @@ const Listar = (props) => {
                 </div>
             </div>
             <div className="table-responsive">
-                {pesquisando && <ModalCarregando aguardando={true} pagina="Listando as permissões do sistema." />}
+                {pesquisando && <ModalCarregando aguardando={true} pagina="Listando as empresas." />}
                 <table className="table table-hover table-striped">
                     <thead>
                         <tr>

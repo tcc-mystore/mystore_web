@@ -6,6 +6,7 @@
     bottom: 1%;
     background-color: rgba(0,0,0,0.6);
     border-radius: 10px;
+    height: 250px;
 }
 .conteudo {
     padding: 3rem;                        
