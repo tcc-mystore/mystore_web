@@ -92,8 +92,4 @@ const RecuperarSenha = (props) => {
     );
 }
 
-const mapStateToProps = state => ({
-    aplicacao: state.aplicacao
-});
-
-export default connect(mapStateToProps, actions)(RecuperarSenha);
+export default connect(null, actions)(RecuperarSenha);

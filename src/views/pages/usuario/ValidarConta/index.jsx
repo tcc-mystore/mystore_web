@@ -4,6 +4,7 @@ import { Form, FormGroup, Input, InputGroup, InputGroupText } from 'reactstrap';
 import logo from '../../../../assets/images/logo.png';
 import BotaoConfirmar from '../../../components/BotaoConfirmar';
 import BotaoCancelar from '../../../components/BotaoCancelar';
+import AlertaAtencao from '../../../components/Alerta';
 
 const ValidarConta = (props) => {
 
@@ -72,6 +73,7 @@ const ValidarConta = (props) => {
             <Form onSubmit={validarConta} className="form-signin text-center">
                 <img className="mb-4" src={logo} alt="Celke" width="200" height="200" />
                 <h1 className="h3 mb-3 font-weight-normal">Alterar Senha</h1>
+                {mensagem ? <AlertaAtencao tipoAlerta={alerta} mensagem={mensagem} /> : null}
                 <FormGroup>
                     <InputGroup>
                         <InputGroupText>E-mail</InputGroupText>

@@ -21,16 +21,17 @@ const Login = (props) => {
         props.handleLogin({ email, senha }, (retorno) => {
             if (retorno.erro) {
                 if (retorno.erro.mensagem) {
-                    setAlerta("error");
+                    setAlerta("danger");
                     setMensagem(retorno.erro.mensagem);
-                }
-                if (retorno.erro.status === 401) {
+                }else if (retorno.erro.status === 401) {
                     setAlerta("warning");
                     setMensagem("Acesso negado!");
-                }
-                if (retorno.erro.error_description === 'Bad credentials') {
+                }else if (retorno.erro.error_description === 'Bad credentials') {
                     setAlerta("warning");
                     setMensagem("Email ou senha inválido!");
+                }else{
+                    setAlerta("danger");
+                    setMensagem("Ocorreu um erro interno, fale com o administrador do sistema!");
                 }
                 setAguardando(false);
             } else {

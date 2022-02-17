@@ -49,6 +49,26 @@ export const limparUsuario = () => {
     }
 } 
 
+export const recuperarSenha = (dadosUsuario, callback) => {
+    return (dispatch) => {
+        authorizationServerRecuperarSenha()
+            .post(
+                '/oauth/token',
+                `grant_type=client_credentials`,
+            )
+            .then((response) => {
+                api(response.data.access_token)
+                    .get(`/v1/usuarios/${dadosUsuario.email}/codigo-acesso`)
+                    .then(
+                        (response) => dispatch(response.data))
+                    .catch(
+                        (error) => callback(erro(error))
+                    );
+            })
+            .catch((callbackError) => callback(erro(callbackError)));
+    }
+}
+
 export const validacaoRecuperarSenha = (dadosUsuario, callback) => {
     return (dispatch) => {
         authorizationServerRecuperarSenha()
