@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
 import * as actionsEmpresa from '../../../../domain/actions/actionsEmpresa';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 import BotaoConfirmar from '../../../components/BotaoConfirmar';
 import Alerta from '../../../components/Alerta';
 import ModalCarregando from '../../../components/ModalCarregando';
+import { cnpjMask, cpfMask } from '../../../../core/helpers/masks';
+import { cpfValidatorMask } from '../../../../core/helpers/validators';
 
 const EmpresaAlterar = (props) => {
-    const [irPara, setIrPara] = useState(null);
     const state = useSelector((state) => state.empresa);
+    const [tipoPessoa, setTipoPessoa] = useState(null);
     const [id, setId] = useState("");
     const [cpfCnpj, setCpfCnpj] = useState("");
     const [nome, setNome] = useState("");
@@ -36,6 +38,7 @@ const EmpresaAlterar = (props) => {
             setNome(state.empresa.nome);
             setCpfCnpj(state.empresa.cpfCnpj);
             setAtivo(state.empresa.ativo);
+            setTipoPessoa(state.empresa.cpfCnpj && (Object.keys(state.empresa.cpfCnpj).length <= 11 ? "CPF" : "CNPJ"))
         }
     }
 
@@ -49,37 +52,32 @@ const EmpresaAlterar = (props) => {
 
         setAguardando(true);
 
-        props.alterarEmpresa({ id, nome, cpfCnpj, ativo }, (retorno) => {
-            if (retorno.erro) {
-                setAlerta("warning");
-                setMensagem(retorno.erro.detail);
-                setAguardando(false);
-            } else {
-                setAlerta("success");
-                setMensagem("Dados alterados com sucesso!.")
-                setAguardando(false);
-                //this.setState({ formularioPronto: true });
-            }
-        })
+        // props.alterarEmpresa({ id, nome, cpfCnpj, ativo }, (retorno) => {
+        //     if (retorno.erro) {
+        //         setAlerta("warning");
+        //         setMensagem(retorno.erro.detail);
+        //         setAguardando(false);
+        //     } else {
+        //         setAlerta("success");
+        //         setMensagem("Dados alterados com sucesso!.")
+        //         setAguardando(false);
+        //         //this.setState({ formularioPronto: true });
+        //     }
+        // })
+
+        console.log(`${id},${nome},${cpfCnpj},${ativo}`)
+        setAguardando(false);
     }
 
     const criticas = () => {
         if (!nome) return setMensagem("Preencha o campo nome!");
         if (!cpfCnpj) return setMensagem("Preencha o campo CPF/CNPJ!");
+        if (!cpfValidatorMask(cpfCnpj)) return setMensagem("CPF/CNPJ inválido!");
         return true;
-    }
-
-    if (irPara !== null) {
-        return <Redirect to={{
-            pathname: irPara,
-            state: { alerta, mensagem }
-        }} />
     }
 
     return (
         <>
-            {console.log(state.empresa)}
-
             {!state.empresa && <ModalCarregando aguardando={true} pagina="Buscando informações da empresa." />}
             <div className="d-flex justify-content-between">
                 <div className="mr-auto p-2">
@@ -116,11 +114,18 @@ const EmpresaAlterar = (props) => {
                         //placeholder={dadosEmpresa ? "Nome do usuário" : "Carregado..."}
                         //disabled={dadosEmpresa ? false : true}
                         autoComplete="nome"
-                        onChange={setNome}
+                        onChange={ev => setNome(ev.target.value)}
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="email">CPF/CNPJ</Label>
+                    <span className='p-2'>
+                        <Input name="cpf_cnpj" type="radio" onChange={() => setTipoPessoa("CPF")} checked={tipoPessoa == "CPF"} />
+                        <Label className='ms-1' check>CPF</Label>
+                    </span>
+                    <span className='p-2'>
+                        <Input name="cpf_cnpj" type="radio" onChange={() => setTipoPessoa("CNPJ")} checked={tipoPessoa == "CNPJ"} />
+                        <Label className='ms-1' check>CNPJ</Label>
+                    </span>
                     <Input
                         type="text"
                         value={cpfCnpj}
@@ -130,7 +135,14 @@ const EmpresaAlterar = (props) => {
                         //placeholder={dadosEmpresa ? "E-mail do usuário" : "Carregando.."}
                         // disabled={dadosEmpresa ? false : true}
                         autoComplete="cpfCnpj"
-                        onChange={setCpfCnpj}
+                        onChange={(ev) => {
+                            if (tipoPessoa == "CPF") {
+                                setCpfCnpj(cpfMask(ev.target.value));
+                            } else {
+                                setCpfCnpj(cnpjMask(ev.target.value));
+                            }
+                        }}
+                        disabled={!tipoPessoa}
                     />
                 </FormGroup>
                 <FormGroup check inline>
@@ -148,7 +160,7 @@ const EmpresaAlterar = (props) => {
                     </Label>
                 </FormGroup>
                 <br /><br />
-                <Link onClick={() => alterarEmpresa()} to="#">
+                <Link onClick={alterarEmpresa} to="#">
                     <BotaoConfirmar aguardando={aguardando} />
                 </Link>
             </Form>
