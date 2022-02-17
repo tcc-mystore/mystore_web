@@ -15,7 +15,7 @@ const AlertaAtencao = (props) => {
             case 'warning':
                 tipo = 'Atênção!';
                 break;
-            case 'error':
+            case 'danger':
                 tipo = 'Erro!';
                 break;
             case 'info':
