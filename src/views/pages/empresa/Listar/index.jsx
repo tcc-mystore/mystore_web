@@ -158,7 +158,7 @@ const Listar = (props) => {
                                     <tr key={dado.id} >
                                         <th className="d-none d-sm-table-cell">{dado.id}</th>
                                         <th>{dado.nome}</th>
-                                        <td className="d-none d-sm-table-cell">{dado.cpf_cnpj}</td>
+                                        <td className="d-none d-sm-table-cell">{dado.cpfCnpj}</td>
                                         <td className="text-center">
                                             {opcoes(dado)}
                                         </td>
