@@ -1,7 +1,21 @@
-import { TODAS_EMPRESAS, LIMPAR_EMPRESAS, UMA_EMPRESA, LIMPAR_EMPRESA } from '../types/empresa';
+import { TODAS_EMPRESAS, LIMPAR_EMPRESAS, UMA_EMPRESA, LIMPAR_EMPRESA, ALTERA_EMPRESA } from '../types/empresa';
 import { api } from '../../core/api';
 import { buscarToken } from '../../core/storage';
 import { erro } from '../../core/handler';
+
+export const alterarEmpresa = ({empresa, id}, callback) => {
+    return (dispatch) => {
+        let token = buscarToken();
+        api(token)
+            .put(`/v1/empresas/${id}`, empresa)
+            .then((response) => {
+                callback({ type: ALTERA_EMPRESA, payload: response.data });
+            })
+            .catch(
+                (callbackError) => callback(erro(callbackError))
+            );
+    }
+}
 
 export const getEmpresas = (callback) => {
     return (dispatch) => {
@@ -17,7 +31,7 @@ export const getEmpresas = (callback) => {
     }
 }
 
-export const getEmpresa = ({id}) => {
+export const getEmpresa = ({ id }) => {
     return (dispatch) => {
         let token = buscarToken();
         api(token)

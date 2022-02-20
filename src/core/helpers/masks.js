@@ -5,7 +5,7 @@ export const cnpjMask = (value) => {
         .replace(/(\d{3})(\d)/, '$1.$2')
         .replace(/(\d{3})(\d)/, '$1/$2')
         .replace(/(\d{4})(\d)/, '$1-$2')
-        .replace(/(-\d{2})\d+?$/, '$1')
+        .replace(/(-\d{2})\d+?$/, '$1');
 }
 
 export const cpfMask = (value) => {
@@ -14,7 +14,7 @@ export const cpfMask = (value) => {
         .replace(/(\d{3})(\d)/, '$1.$2')
         .replace(/(\d{3})(\d)/, '$1.$2')
         .replace(/(\d{3})(\d)/, '$1-$2')
-        .replace(/(-\d{2})\d+?$/, '$1')
+        .replace(/(-\d{2})\d+?$/, '$1');
 }
 
 export const cepMask = (value) => {
@@ -22,5 +22,13 @@ export const cepMask = (value) => {
         .replace(/\D+/g, '')
         .replace(/(\d{2})(\d)/, '$1.$2')
         .replace(/(\d{3})(\d)/, '$1-$2')
-        .replace(/(-\d{3})\d+?$/, '$1')
+        .replace(/(-\d{3})\d+?$/, '$1');
+}
+
+export const telefoneMask = (value) => {
+    return value
+        .replace(/\D+/g, '')
+        .replace(/^(\d{2})(\d)/g, "($1) $2")
+        .replace(/(\d{5})(\d)/, '$1-$2')
+        .replace(/(-\d{4})\d+?$/, '$1');
 }

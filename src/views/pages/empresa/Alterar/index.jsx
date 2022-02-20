@@ -6,13 +6,14 @@ import { Form, FormGroup, Label, Input, Nav, NavItem, NavLink, TabContent, TabPa
 import BotaoConfirmar from '../../../components/BotaoConfirmar';
 import Alerta from '../../../components/Alerta';
 import ModalCarregando from '../../../components/ModalCarregando';
-import { cnpjMask, cpfMask, cepMask } from '../../../../core/helpers/masks';
-import { cpfValidatorMask, cnpjValidatorMask } from '../../../../core/helpers/validators';
+import { cnpjMask, cpfMask, cepMask, telefoneMask } from '../../../../core/helpers/masks';
+import { cpfValidatorMask, cnpjValidatorMask, telefoneValidator } from '../../../../core/helpers/validators';
 
 const EmpresaAlterar = (props) => {
-    const {empresa} = useSelector((state) => state.empresa);
+    const { empresa } = useSelector((state) => state.empresa);
     const [id, setId] = useState("");
     const [cpfCnpj, setCpfCnpj] = useState("");
+    const [telefone, setTelefone] = useState("");
     const [nome, setNome] = useState("");
     const [ativo, setAtivo] = useState(false);
     const [logradouro, setLogradouro] = useState("");
@@ -20,8 +21,8 @@ const EmpresaAlterar = (props) => {
     const [complemento, setComplemento] = useState("");
     const [bairro, setBairro] = useState("");
     const [cep, setCep] = useState("");
-    const [cidade, setCidade] = useState("");
-    const [estado, setEstado] = useState("");
+    const [idCidade, setIdCidade] = useState("");
+    const [idEstado, setIdEstado] = useState("");
     const [alerta, setAlerta] = useState("");
     const [mensagem, setMensagem] = useState("");
     const [aguardando, setAguardando] = useState(false);
@@ -45,15 +46,16 @@ const EmpresaAlterar = (props) => {
             setId(empresa.id);
             setNome(empresa.nome);
             setCpfCnpj(empresa.cpfCnpj);
+            setTelefone(empresa.telefone);
             setAtivo(empresa.ativo);
-            setTipoPessoa(empresa.cpfCnpj && (Object.keys(empresa.cpfCnpj).length <= 11 ? "CPF" : "CNPJ"));
+            setTipoPessoa(empresa.cpfCnpj && (Object.keys(empresa.cpfCnpj).length <= 14 ? "CPF" : "CNPJ"));
             setLogradouro(empresa.endereco.logradouro);
             setNumero(empresa.endereco.numero);
             setBairro(empresa.endereco.bairro);
             setCep(empresa.endereco.cep);
             setComplemento(empresa.endereco.complemento);
-            setCidade(empresa.endereco.cidade.id);
-            setEstado(empresa.endereco.cidade.estado.id)
+            setIdCidade(empresa.endereco.cidade.id);
+            setIdEstado(empresa.endereco.cidade.estado.id)
         }
     }
 
@@ -67,47 +69,56 @@ const EmpresaAlterar = (props) => {
 
         setAguardando(true);
         let dadosEmpresa = {
-            id, 
             nome,
-            cpfCnpj, 
-            telefone: null, 
+            cpfCnpj,
+            telefone,
             endereco: {
-                logradouro, 
-                numero, 
-                complemento, 
-                bairro, 
-                cidade: { 
-                    id: cidade 
+                logradouro,
+                numero,
+                complemento,
+                bairro,
+                cep,
+                cidade: {
+                    id: idCidade
                 }
             }
         }
-        // props.alterarEmpresa({ id, nome, cpfCnpj, ativo }, (retorno) => {
-        //     if (retorno.erro) {
-        //         setAlerta("warning");
-        //         setMensagem(retorno.erro.detail);
-        //         setAguardando(false);
-        //     } else {
-        //         setAlerta("success");
-        //         setMensagem("Dados alterados com sucesso!.")
-        //         setAguardando(false);
-        //         //this.setState({ formularioPronto: true });
-        //     }
-        // })
-
-        console.log(`${id},${nome},${cpfCnpj},${ativo}`)
-        setAguardando(false);
+        props.alterarEmpresa({ empresa: dadosEmpresa, id }, (retorno) => {
+            if (retorno.erro) {
+                setAlerta("warning");
+                setMensagem(retorno.erro.detail);
+                setAguardando(false);
+            } else {
+                setAlerta("success");
+                setMensagem("Dados alterados com sucesso!.")
+                setAguardando(false);
+            }
+        });
     }
 
     const criticas = () => {
         /* eslint-disable */
         if (!nome) {
+            setTabAtiva(0);
             return setMensagem("Preencha o campo nome!");
         } else if (!cpfCnpj) {
+            setTabAtiva(0);
             return setMensagem("Preencha o campo CPF/CNPJ!");
         } else if (tipoPessoa == "CPF" && !cpfValidatorMask(cpfCnpj)) {
+            setTabAtiva(0);
             return setMensagem("CPF inválido!")
         } else if (tipoPessoa == "CNPJ" && !cnpjValidatorMask(cpfCnpj)) {
+            setTabAtiva(0);
             return setMensagem("CNPJ inválido!")
+        } else if (!telefoneValidator(telefone)) {
+            setTabAtiva(0);
+            return setMensagem("Telefone inválido!")
+        } else if (!bairro) {
+            setTabAtiva(1);
+            return setMensagem("Preencha o campo bairro!");
+        } else if (!cep) {
+            setTabAtiva(1);
+            return setMensagem("Preencha o campo CEP!");
         } else {
             return true;
         }
@@ -129,7 +140,6 @@ const EmpresaAlterar = (props) => {
 
     return (
         <>
-        {/* {console.log(empresa)} */}
             {!empresa && <ModalCarregando aguardando={true} pagina="Buscando informações da empresa." />}
             <div className="d-flex justify-content-between">
                 <div className="mr-auto p-2">
@@ -202,7 +212,21 @@ const EmpresaAlterar = (props) => {
                                             setCpfCnpj(cnpjMask(ev.target.value));
                                         }
                                     }}
-                                    disabled={!tipoPessoa}
+                                    disabled={tipoPessoa}
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label className='ms-1' for='cpf_cnpj' check>Telefone</Label>
+                                <Input
+                                    type="text"
+                                    value={telefone}
+                                    name="telefone"
+                                    id="telefone"
+                                    className="form-control"
+                                    autoComplete="telefone"
+                                    onChange={ev => {
+                                        setTelefone(telefoneMask(ev.target.value));
+                                    }}
                                 />
                             </FormGroup>
                             <FormGroup check inline>
@@ -229,8 +253,7 @@ const EmpresaAlterar = (props) => {
                                     id="logradouro"
                                     className="form-control"
                                     autoComplete="logradouro"
-                                    onChange={ev => setLogradouro(ev.target.value)}
-                                />
+                                    onChange={ev => setLogradouro(ev.target.value)} />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="numero">Número</Label>
@@ -241,8 +264,7 @@ const EmpresaAlterar = (props) => {
                                     id="numero"
                                     className="form-control"
                                     autoComplete="numero"
-                                    onChange={ev => setNumero(ev.target.value)}
-                                />
+                                    onChange={ev => setNumero(ev.target.value)} />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="complemento">Complemento</Label>
@@ -253,8 +275,7 @@ const EmpresaAlterar = (props) => {
                                     id="complemento"
                                     className="form-control"
                                     autoComplete="complemento"
-                                    onChange={ev => setComplemento(ev.target.value)}
-                                />
+                                    onChange={ev => setComplemento(ev.target.value)} />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="bairro">Bairro</Label>
@@ -265,8 +286,7 @@ const EmpresaAlterar = (props) => {
                                     id="bairro"
                                     className="form-control"
                                     autoComplete="bairro"
-                                    onChange={ev => setBairro(ev.target.value)}
-                                />
+                                    onChange={ev => setBairro(ev.target.value)} />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="cep">CEP</Label>
@@ -277,8 +297,7 @@ const EmpresaAlterar = (props) => {
                                     id="cep"
                                     className="form-control"
                                     autoComplete="cep"
-                                    onChange={ev => setCep(cepMask(ev.target.value))}
-                                />
+                                    onChange={ev => setCep(cepMask(ev.target.value))} />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="bairro">Cidade</Label>
@@ -286,18 +305,13 @@ const EmpresaAlterar = (props) => {
                                     bsSize="lg"
                                     className="mb-3"
                                     type="select"
-                                    value={cidade}
-                                    onChange={ev=>setCidade(ev.target.value)}
-                                >
-                                    <option value={0}>
-                                       
-                                    </option>   
-                                    
-                                       <option value={1}>
-                                       cidade1
+                                    value={idCidade}
+                                    onChange={ev => setIdCidade(ev.target.value)}>
+                                    <option value={1}>
+                                        cidade1
                                     </option>
                                     <option value={2}>
-                                      cidade2
+                                        cidade2
                                     </option>
                                 </Input>
                             </FormGroup>
@@ -307,18 +321,13 @@ const EmpresaAlterar = (props) => {
                                     bsSize="lg"
                                     className="mb-3"
                                     type="select"
-                                    value={estado}
-                                    onChange={ev=>setEstado(ev.target.value)}
-                                >
-                                    <option value={0}>
-                                       
-                                    </option>   
-                                    
-                                       <option value={1}>
-                                       estado1
-                                    </option>
+                                    value={idEstado}
+                                    onChange={ev => setIdEstado(ev.target.value)}>
                                     <option value={1}>
-                                      estado2
+                                        estado1
+                                    </option>
+                                    <option value={2}>
+                                        estado2
                                     </option>
                                 </Input>
                             </FormGroup>
