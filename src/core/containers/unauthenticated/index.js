@@ -1,7 +1,7 @@
 import React from 'react';
 import UnauthenticatedChildren from './children';
 import { connect } from 'react-redux';
-import * as actions from '../../../domain/actions';
+import * as actionsUsuario from '../../../domain/actions/actionsUsuario';
 import { Redirect } from 'react-router-dom';
 
 const ContainerAuthenticated = Component => {
@@ -11,17 +11,13 @@ const ContainerAuthenticated = Component => {
         state = { erro: false }
 
         componentDidMount() {
-            const { authorized, getPerfil } = this.props;
-            getPerfil((err) => {
-                this.setState({ erro: true })
-            });
-            if (authorized) return;
+            const { authorized } = this.props;
+            if (authorized) this.setState({ erro: true });
         }
 
         componentDidUpdate(nextProps) {
             const { history, authorized } = this.props;
-            if (authorized)
-                return history.replace("/mystore/pagina-inicial");
+            if (authorized) return history.replace("/mystore/pagina-inicial");
         }
 
         render() {
@@ -30,7 +26,9 @@ const ContainerAuthenticated = Component => {
                     {
                         this.state.erro
                             ?
-                            <Redirect to="/mystore/pagina-inexistente" />
+                            <Redirect to={{
+                                pathname: "/mystore/"
+                            }} />
                             :
                             <UnauthenticatedChildren>
                                 <Component {...this.props} />
@@ -46,7 +44,7 @@ const ContainerAuthenticated = Component => {
         usuarioLogado: state.usuario.usuarioLogado
     });
 
-    return connect(mapStateToProps, actions)(ComponentAuthenticated);
+    return connect(mapStateToProps, actionsUsuario)(ComponentAuthenticated);
 }
 
 export default ContainerAuthenticated;

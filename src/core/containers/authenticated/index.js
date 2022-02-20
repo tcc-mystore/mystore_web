@@ -2,32 +2,47 @@ import React from 'react';
 import AuthenticatedChildren from './children';
 import { connect } from 'react-redux';
 import * as actionsUsuario from '../../../domain/actions/actionsUsuario';
+import { Redirect } from 'react-router-dom';
 
 const ContainerAuthenticated = Component => {
 
     class ComponentAuthenticated extends React.Component {
 
+        state = { erro: false }
+
         componentDidMount() {
-            const { authorized, getPerfil, history } = this.props;
-            getPerfil((err)=>{});
-            if (!authorized) {
-                return history.replace("/mystore/");
-            }
+            const { authorized, getPerfil } = this.props;
+
+            getPerfil(() => { 
+                if (!authorized) {
+                    this.setState({ erro: true });
+                }
+            });
         }
 
         componentDidUpdate(nextProps) {
-            const { authorized, history } = this.props;
+            const { authorized } = this.props;
 
             if (!nextProps.authorized || !authorized) {
-                return history.replace("/mystore/");
+                this.setState({ erro: true });
             }
         }
 
         render() {
             return (
-                <AuthenticatedChildren>
-                    <Component {...this.props} />
-                </AuthenticatedChildren>
+                <>
+                    {
+                        this.state.erro
+                            ?
+                            <Redirect to={{
+                                pathname: "/mystore/",
+                            }} />
+                            :
+                            <AuthenticatedChildren>
+                                <Component {...this.props} />
+                            </AuthenticatedChildren>
+                    }
+                </>
             );
         }
     }
