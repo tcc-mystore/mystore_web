@@ -1,34 +1,29 @@
-import { ALTERA_EMPRESA, LIMPAR_EMPRESA, LIMPAR_EMPRESAS, TODAS_EMPRESAS, UMA_EMPRESA } from '../types/empresa';
+import { ENDPOINS_DISPONIVEIS, HOST_CHECK, LIMPAR_ENDPOINS, LIMPAR_HOST } from '../types/mystore';
 
-const reducersEmpresa = (state = {}, action) => {
+const reducersMyStore = (state = {}, action) => {
     switch (action.type) {
-        case ALTERA_EMPRESA:
+        case ENDPOINS_DISPONIVEIS:
             return {
                 ...state,
                 empresa: action.payload,
             }
-        case TODAS_EMPRESAS:
+        case HOST_CHECK:
             return {
                 ...state,
                 empresas: action.payload,
             }
-        case UMA_EMPRESA:
+        case LIMPAR_ENDPOINS:
             return {
                 ...state,
                 empresa: action.payload,
             }
-        case LIMPAR_EMPRESAS:
+        case LIMPAR_HOST:
             return {
                 ...state,
                 empresas: null,
-            }
-        case LIMPAR_EMPRESA:
-            return {
-                ...state,
-                empresa: null,
             }
         default:
             return state;
     }
 }
-export default reducersEmpresa;
+export default reducersMyStore;
