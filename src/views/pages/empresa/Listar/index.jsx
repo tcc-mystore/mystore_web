@@ -11,12 +11,26 @@ import BotaoAtivar from '../../../components/BotaoAtivar';
 import BotaoDesativar from '../../../components/BotaoDesativar';
 import BotaoExcluir from '../../../components/BotaoExcluir';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Alerta from '../../../components/Alerta';
+import ModalApagar from '../../../components/ModalApagar';
+import ModalAtivar from '../../../components/ModalAtivar';
+import ModalDesativar from '../../../components/ModalDesativar';
 
 const Listar = (props) => {
 
     const [empresas, setEmpresas] = useState([]);
     const [pesquisando, setPesquisando] = useState(false);
     const { empresa } = useSelector((state) => state);
+    //
+    const [alerta, setAlerta] = useState("");
+    const [mensagem, setMensagem] = useState("");
+    const [aguardando, setAguardando] = useState(false);
+    const [confirmarExclusao, setConfirmarExclusao] = useState(false);
+    const [idParaExcluir, setIdParaExcluir] = useState(null);
+    const [idParaAtivar, setIdParaAtivar] = useState(null);
+    const [idParaDesativar, setIdParaDesativar] = useState(null);
+    const [confirmarAtivacao, setConfirmarAtivacao] = useState(false);
+    const [confirmarDesativacao, setConfirmarDesativacao] = useState(false);
 
     const listarEmpresas = async () => {
         setPesquisando(true);
@@ -36,6 +50,94 @@ const Listar = (props) => {
         await props.limparEmpresas();
     }
 
+    const abrirConfirmarExclusao = (id) => {
+       setConfirmarExclusao(true);
+        setIdParaExcluir(id);
+    }
+
+    const fecharConfirmarExclusao = () => {
+        setConfirmarExclusao(false);
+    }
+
+    const apagarUsuario = () => {
+        setAlerta("");
+        setAguardando(true);
+        this.props.removerUsuario(idParaExcluir, (retorno) => {
+            if (retorno.erro.erro) {
+                setAlerta("warning");
+                setMensagem(retorno.erro.mensagem);
+                setAguardando(false);
+            } else {
+                setAlerta("success");
+                setMensagem(retorno.erro.mensagem);
+                setAguardando(false);
+                fecharConfirmarAtivacao();
+                limparEmpresas();
+                listarEmpresas();
+            }
+        })
+    }
+
+    //Início rotina de ativação
+    const ativarUsuario = () => {
+        setAlerta("");
+        setAguardando(true);
+        props.ativarUsuario({ id: idParaAtivar, ativo: true }, (retorno) => {
+            if (retorno.erro.erro) {
+                setAlerta("warning");
+                setMensagem(retorno.erro.mensagem);
+                setAguardando(false);
+            } else {
+                setAlerta("success");
+                setMensagem(retorno.erro.mensagem);
+                setAguardando(false);
+                fecharConfirmarAtivacao();
+                limparEmpresas();
+                listarEmpresas();
+            }
+        });
+    }
+
+    const abrirConfirmarAtivacao = (id) => {
+       setConfirmarAtivacao(true);
+       setIdParaAtivar(id);
+    }
+
+    const fecharConfirmarAtivacao = () => {
+        setConfirmarAtivacao(false);
+    }
+    //Fim rotina de ativação
+
+    //Início rotina de desativação
+    const desativarUsuario = () => {
+        setAlerta("");
+        setAguardando(true);
+        props.ativarUsuario({ id: idParaDesativar, ativo: false }, (retorno) => {
+            if (retorno.erro.erro) {
+                setAlerta("warning");
+                setMensagem(retorno.erro.mensagem);
+                setAguardando(false);
+            } else {
+                setAlerta("success");
+                setMensagem(retorno.erro.mensagem);
+                setAguardando(false);
+                fecharConfirmarAtivacao();
+                limparEmpresas();
+                listarEmpresas();
+            }
+        });
+    }
+
+    const abrirConfirmarDesativacao = (id) => {
+        setConfirmarDesativacao(true);
+        setIdParaDesativar(id);
+    }
+
+    const fecharConfirmarDesativacao = () => {
+        setConfirmarDesativacao(false);
+    }
+    //Fim rotina de desativação
+
     const opcoes = (dado) => {
         if (dado._links) {
             return (
@@ -44,13 +146,13 @@ const Listar = (props) => {
                         <BotaoVisualizar uri={`/mystore/visualizar-empresa/${dado.id}`} />
                         <BotaoEditar uri={`/mystore/alterar-empresa/${dado.id}`} />
                         {dado.ativo ? <BotaoDesativar onClick={() => {
-                            // abrirConfirmarDesativacao(dado.id)
+                            abrirConfirmarDesativacao(dado.id)
                         }} /> : <BotaoAtivar onClick={() => {
-                            // abrirConfirmarAtivacao(dado.id)
+                            abrirConfirmarAtivacao(dado.id)
                         }} />}
-                        <BotaoExcluir onClick={() => {
-                            // abrirConfirmarExclusao(dado.id)
-                        }} />
+                        {dado.ativo === false ? <BotaoExcluir onClick={() => {
+                            abrirConfirmarExclusao(dado.id)
+                        }} /> : null}
                     </span>
                     <div className="dropdown d-block d-md-none">
                         <UncontrolledButtonDropdown>
@@ -61,13 +163,13 @@ const Listar = (props) => {
                                 <BotaoVisualizar uri={`/mystore/visualizar-empresa/${dado.id}`} />
                                 <BotaoEditar uri={`/mystore/alterar-empresa/${dado.id}`} />
                                 {dado.ativo ? <BotaoDesativar onClick={() => {
-                                    // abrirConfirmarDesativacao(dado.id)
+                                    abrirConfirmarDesativacao(dado.id)
                                 }} /> : <BotaoAtivar onClick={() => {
-                                    // abrirConfirmarAtivacao(dado.id)
+                                    abrirConfirmarAtivacao(dado.id)
                                 }} />}
-                                <BotaoExcluir onClick={() => {
+                                {dado.ativo === false ? <BotaoExcluir onClick={() => {
                                     // abrirConfirmarExclusao(dado.id)
-                                }} />
+                                }} /> : null}
                             </DropdownMenu>
                         </UncontrolledButtonDropdown>
                         <div className="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
@@ -88,7 +190,14 @@ const Listar = (props) => {
 
     return (
         <>
+            {/* Component modal apagar */}
+            <ModalApagar isOpen={confirmarExclusao} toogle={fecharConfirmarExclusao} apagar='Empresa' aguardando={aguardando} apagarObjeto={apagarUsuario} />
+            {/* Component modal ativar */}
+            <ModalAtivar isOpen={confirmarAtivacao} toogle={fecharConfirmarAtivacao} ativar='Empresa' aguardando={aguardando} ativarObjeto={ativarUsuario} />
+            {/* Component modal desativar */}
+            <ModalDesativar isOpen={confirmarDesativacao} toogle={fecharConfirmarDesativacao} desativar='Empresa' aguardando={aguardando} desativarObjeto={desativarUsuario} />
             <div className="form-group row">
+                {mensagem ? <Alerta tipoAlerta={alerta} mensagem={mensagem} /> : null}
                 <div className="col-sm-2">
                     <FormGroup>
                         <Label for="nome">Código</Label>
@@ -99,7 +208,7 @@ const Listar = (props) => {
                             id="codigo"
                             autoComplete="codigo"
                             //onChange={(ev) => this.onChangeInput("codigo", ev)}
-                            placeholder="Filtar pelo código" disabled/>
+                            placeholder="Filtar pelo código" disabled />
                     </FormGroup>
                 </div>
                 <div className="col-sm-5">
@@ -112,16 +221,16 @@ const Listar = (props) => {
                             type="descricao"
                             //value={email}
                             autoComplete="descricao"
-                            placeholder="Filtrar por descrição" disabled/>
+                            placeholder="Filtrar por descrição" disabled />
                     </FormGroup>
                 </div>
                 <div className="col-sm-5">
                     <FormGroup>
                         <Label for="nome">Nome Técnico</Label>
                         <Input type="text" name="nome" id="nome" placeholder="Nome técnico"
-                        //value={this.state.dataInicial} 
-                        //onChange={(ev) => this.ajustaDataInicio(ev.target.value)}
-                        disabled/>
+                            //value={this.state.dataInicial} 
+                            //onChange={(ev) => this.ajustaDataInicio(ev.target.value)}
+                            disabled />
                     </FormGroup>
                 </div>
             </div>
