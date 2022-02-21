@@ -1,4 +1,4 @@
-import { TODAS_EMPRESAS, LIMPAR_EMPRESAS, UMA_EMPRESA, LIMPAR_EMPRESA, ALTERA_EMPRESA } from '../types/empresa';
+import { TODAS_EMPRESAS, LIMPAR_EMPRESAS, EMPRESA_POR_ID, LIMPAR_EMPRESA_POR_ID, ALTERA_EMPRESA } from '../types/empresa';
 import { api } from '../../core/api';
 import { buscarToken } from '../../core/storage';
 import { erro } from '../../core/handler';
@@ -17,37 +17,35 @@ export const alterarEmpresa = ({ empresa, id }, callback) => {
 }
 
 export const getEmpresas = (callback) => {
-    return () => {
+    return (dispatch) => {
         api(buscarToken())
             .get(`/v1/empresas`)
             .then((response) => {
-                callback({ type: TODAS_EMPRESAS, payload: response.data });
+                dispatch({ type: TODAS_EMPRESAS, payload: response.data });
             })
             .catch((callbackError) => {
                 callback(erro(callbackError));
-            }
-            );
+            });
     }
 }
 
-export const getEmpresa = ({ id }, callback) => {
-    return () => {
+export const ativarEmpresa = ({ id, ativo }, callback) => {
+    return (dispatch) => {
         api(buscarToken())
-            .get(`/v1/empresas/${id}`)
+            .put(`/v1/empresas/${id}/${ativo ? 'ativar' : 'desativar'}`)
             .then((response) => {
-                callback({ type: UMA_EMPRESA, payload: response.data });
+                dispatch({ type: EMPRESA_POR_ID, payload: response.data });
             })
             .catch((callbackError) => {
                 callback(erro(callbackError));
-            }
-            );
+            });
     }
+}
+
+export const limparEmpresa = () => {
+    return (dispatch) => dispatch({ type: LIMPAR_EMPRESA_POR_ID });
 }
 
 export const limparEmpresas = () => {
     return (dispatch) => dispatch({ type: LIMPAR_EMPRESAS });
-}
-
-export const limparEmpresa = () => {
-    return (dispatch) => dispatch({ type: LIMPAR_EMPRESA });
 }

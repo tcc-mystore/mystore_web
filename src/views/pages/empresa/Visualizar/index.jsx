@@ -24,7 +24,7 @@ const EmpresaVisualizar = (props) => {
     const getEmpresa = async (id) => {
         await props.getEmpresa({ id });
     }
-
+/*eslint-disable */
     const ativaTabBar = (id) => {
         let componentes = document.getElementsByClassName('dados-cadastrais');
         let indiceComponente = null;
@@ -37,7 +37,7 @@ const EmpresaVisualizar = (props) => {
         document.getElementById(id).classList.add('active');
         setTabAtiva(indiceComponente);
     }
-
+/*eslint-enable */
     return (
         <>
             <div className="d-flex justify-content-between">
@@ -59,7 +59,7 @@ const EmpresaVisualizar = (props) => {
             </div>
             <hr />
             {
-                state.empresa ?
+                state.empresaPorId ?
                     <div>
                         <Nav tabs>
                             <NavItem>
@@ -77,43 +77,43 @@ const EmpresaVisualizar = (props) => {
                             <TabPane tabId={0}>
                                 <dl className="row">
                                     <dt className="col-sm-4">Código</dt>
-                                    <dd className="col-sm-8">{state.empresa.id}</dd>
+                                    <dd className="col-sm-8">{state.empresaPorId.id}</dd>
 
                                     <dt className="col-sm-4">Nome</dt>
-                                    <dd className="col-sm-8">{state.empresa.nome}</dd>
+                                    <dd className="col-sm-8">{state.empresaPorId.nome}</dd>
 
                                     <dt className="col-sm-4">CPF/CNPJ</dt>
-                                    <dd className="col-sm-8">{state.empresa.cpfCnpj}</dd>
+                                    <dd className="col-sm-8">{state.empresaPorId.cpfCnpj}</dd>
 
                                     <dt className="col-sm-4">Telefone</dt>
-                                    <dd className="col-sm-8">{state.empresa.telefone}</dd>
+                                    <dd className="col-sm-8">{state.empresaPorId.telefone}</dd>
 
                                     <dt className="col-sm-4">Data do Cadastrado</dt>
-                                    <dd className="col-sm-8">{state.empresa.dataCadastro && format(new Date(state.empresa.dataCadastro), 'dd/MM/yyyy hh:mm:ss', { locale: pt })}</dd>
+                                    <dd className="col-sm-8">{state.empresaPorId.dataCadastro && format(new Date(state.empresaPorId.dataCadastro), 'dd/MM/yyyy hh:mm:ss', { locale: pt })}</dd>
 
                                     <dt className="col-sm-4">Última Alteração</dt>
-                                    <dd className="col-sm-8">{state.empresa.dataAtualizacao && format(new Date(state.empresa.dataAtualizacao), 'dd/MM/yyyy hh:mm:ss', { locale: pt })}</dd>
+                                    <dd className="col-sm-8">{state.empresaPorId.dataAtualizacao && format(new Date(state.empresaPorId.dataAtualizacao), 'dd/MM/yyyy hh:mm:ss', { locale: pt })}</dd>
 
                                     <dt className="col-sm-4">Status</dt>
-                                    <dd className="col-sm-8">{state.empresa.ativo ? "Ativo" : "Inativo"}</dd>
+                                    <dd className="col-sm-8">{state.empresaPorId.ativo ? "Ativo" : "Inativo"}</dd>
                                 </dl>
                             </TabPane>
                             <TabPane tabId={1}>
                                 <dl className="row">
                                     <dt className="col-sm-4">Endereço</dt>
-                                    <dd className="col-sm-8">{`${state.empresa.endereco.logradouro} ${state.empresa.endereco.numero}, ${state.empresa.endereco.complemento ? state.empresa.endereco.complemento : ''}`}</dd>
+                                    <dd className="col-sm-8">{`${state.empresaPorId.endereco.logradouro} ${state.empresaPorId.endereco.numero}, ${state.empresaPorId.endereco.complemento ? state.empresaPorId.endereco.complemento : ''}`}</dd>
 
                                     <dt className="col-sm-4">Bairro</dt>
-                                    <dd className="col-sm-8">{state.empresa.endereco.bairro}</dd>
+                                    <dd className="col-sm-8">{state.empresaPorId.endereco.bairro}</dd>
 
                                     <dt className="col-sm-4">CEP</dt>
-                                    <dd className="col-sm-8">{state.empresa.endereco.cep}</dd>
+                                    <dd className="col-sm-8">{state.empresaPorId.endereco.cep}</dd>
 
                                     <dt className="col-sm-4">Cidade</dt>
-                                    <dd className="col-sm-8">{state.empresa.endereco.cidade.nome}</dd>
+                                    <dd className="col-sm-8">{state.empresaPorId.endereco.cidade.nome}</dd>
 
                                     <dt className="col-sm-4">Estado</dt>
-                                    <dd className="col-sm-8">{state.empresa.endereco.cidade.estado.nome}</dd>
+                                    <dd className="col-sm-8">{state.empresaPorId.endereco.cidade.estado.nome}</dd>
                                 </dl>
                             </TabPane>
                         </TabContent>

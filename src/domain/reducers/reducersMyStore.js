@@ -5,22 +5,22 @@ const reducersMyStore = (state = {}, action) => {
         case ENDPOINS_DISPONIVEIS:
             return {
                 ...state,
-                empresa: action.payload,
+                endpoints: action.payload,
             }
         case HOST_CHECK:
             return {
                 ...state,
-                empresas: action.payload,
+                host: action.payload,
             }
         case LIMPAR_ENDPOINS:
             return {
                 ...state,
-                empresa: action.payload,
+                endpoints: action.payload,
             }
         case LIMPAR_HOST:
             return {
                 ...state,
-                empresas: null,
+                host: null,
             }
         default:
             return state;

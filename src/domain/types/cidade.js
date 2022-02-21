@@ -1,0 +1,3 @@
+export const
+    TODAS_CIDADES = 'TODAS_CIDADES',
+    LIMPAR_CIDADES = 'LIMPAR_CIDADES';

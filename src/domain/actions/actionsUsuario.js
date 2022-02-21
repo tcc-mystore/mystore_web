@@ -9,7 +9,6 @@ export const getPerfil = (callback) => {
             api(buscarToken())
                 .get(`/v1/usuarios/perfil`)
                 .then((response) => {
-                    console.log('getPerfil');
                     dispatch({ type: PERFIL_USUARIO, payload: response.data })
                 })
                 .catch((callbackError) => {

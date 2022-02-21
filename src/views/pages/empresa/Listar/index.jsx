@@ -34,7 +34,13 @@ const Listar = (props) => {
 
     const listarEmpresas = async () => {
         setPesquisando(true);
-        await props.getEmpresas();
+        props.getEmpresas((retorno) => {
+            if (retorno.erro) {
+                setAlerta("warning");
+                setMensagem(retorno.erro.mensagem);
+            }
+            setAguardando(false);
+        });
     }
 
     // eslint-disable-next-line
@@ -51,7 +57,7 @@ const Listar = (props) => {
     }
 
     const abrirConfirmarExclusao = (id) => {
-       setConfirmarExclusao(true);
+        setConfirmarExclusao(true);
         setIdParaExcluir(id);
     }
 
@@ -59,10 +65,10 @@ const Listar = (props) => {
         setConfirmarExclusao(false);
     }
 
-    const apagarUsuario = () => {
+    const apagarEmpresa = () => {
         setAlerta("");
         setAguardando(true);
-        this.props.removerUsuario(idParaExcluir, (retorno) => {
+        this.props.removerEmpresa(idParaExcluir, (retorno) => {
             if (retorno.erro.erro) {
                 setAlerta("warning");
                 setMensagem(retorno.erro.mensagem);
@@ -79,10 +85,10 @@ const Listar = (props) => {
     }
 
     //Início rotina de ativação
-    const ativarUsuario = () => {
+    const ativarEmpresa = () => {
         setAlerta("");
         setAguardando(true);
-        props.ativarUsuario({ id: idParaAtivar, ativo: true }, (retorno) => {
+        props.ativarEmpresa({ id: idParaAtivar, ativo: true }, (retorno) => {
             if (retorno.erro.erro) {
                 setAlerta("warning");
                 setMensagem(retorno.erro.mensagem);
@@ -99,8 +105,8 @@ const Listar = (props) => {
     }
 
     const abrirConfirmarAtivacao = (id) => {
-       setConfirmarAtivacao(true);
-       setIdParaAtivar(id);
+        setConfirmarAtivacao(true);
+        setIdParaAtivar(id);
     }
 
     const fecharConfirmarAtivacao = () => {
@@ -109,17 +115,19 @@ const Listar = (props) => {
     //Fim rotina de ativação
 
     //Início rotina de desativação
-    const desativarUsuario = () => {
+    const desativarEmpresa = () => {
         setAlerta("");
         setAguardando(true);
-        props.ativarUsuario({ id: idParaDesativar, ativo: false }, (retorno) => {
-            if (retorno.erro.erro) {
+        props.ativarEmpresa({ id: idParaDesativar, ativo: false }, (retorno) => {
+            console.log('entrei')
+            if (retorno.erro) {
                 setAlerta("warning");
-                setMensagem(retorno.erro.mensagem);
+                setMensagem(retorno.erro.userMessage);
                 setAguardando(false);
+                setConfirmarDesativacao(false);
             } else {
                 setAlerta("success");
-                setMensagem(retorno.erro.mensagem);
+                setMensagem(retorno.erro.userMensagem);
                 setAguardando(false);
                 fecharConfirmarAtivacao();
                 limparEmpresas();
@@ -191,11 +199,11 @@ const Listar = (props) => {
     return (
         <>
             {/* Component modal apagar */}
-            <ModalApagar isOpen={confirmarExclusao} toogle={fecharConfirmarExclusao} apagar='Empresa' aguardando={aguardando} apagarObjeto={apagarUsuario} />
+            <ModalApagar isOpen={confirmarExclusao} toogle={fecharConfirmarExclusao} apagar='Empresa' aguardando={aguardando} apagarObjeto={apagarEmpresa} />
             {/* Component modal ativar */}
-            <ModalAtivar isOpen={confirmarAtivacao} toogle={fecharConfirmarAtivacao} ativar='Empresa' aguardando={aguardando} ativarObjeto={ativarUsuario} />
+            <ModalAtivar isOpen={confirmarAtivacao} toogle={fecharConfirmarAtivacao} ativar='Empresa' aguardando={aguardando} ativarObjeto={ativarEmpresa} />
             {/* Component modal desativar */}
-            <ModalDesativar isOpen={confirmarDesativacao} toogle={fecharConfirmarDesativacao} desativar='Empresa' aguardando={aguardando} desativarObjeto={desativarUsuario} />
+            <ModalDesativar isOpen={confirmarDesativacao} toogle={fecharConfirmarDesativacao} desativar='Empresa' aguardando={aguardando} desativarObjeto={desativarEmpresa} />
             <div className="form-group row">
                 {mensagem ? <Alerta tipoAlerta={alerta} mensagem={mensagem} /> : null}
                 <div className="col-sm-2">
