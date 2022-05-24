@@ -26,6 +26,9 @@ const Login = (props) => {
                 }else if (retorno.erro.status === 401) {
                     setAlerta("warning");
                     setMensagem("Acesso negado!");
+                }else if (retorno.erro.status === 403) {
+                    setAlerta("warning");
+                    setMensagem("Usuário não possui permissão para essa solicitação!");
                 }else if (retorno.erro.error_description === 'Bad credentials') {
                     setAlerta("warning");
                     setMensagem("Email ou senha inválido!");

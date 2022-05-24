@@ -13,19 +13,17 @@ const ContainerAuthenticated = Component => {
         componentDidMount() {
             const { authorized, getPerfil } = this.props;
 
-            getPerfil(() => { 
-                if (!authorized) {
+            getPerfil(() => {
+                if (!authorized)
                     this.setState({ erro: true });
-                }
             });
         }
 
         componentDidUpdate(nextProps) {
             const { authorized } = this.props;
 
-            if (!nextProps.authorized || !authorized) {
+            if (!nextProps.authorized || !authorized)
                 this.setState({ erro: true });
-            }
         }
 
         render() {
@@ -36,6 +34,7 @@ const ContainerAuthenticated = Component => {
                             ?
                             <Redirect to={{
                                 pathname: "/mystore/",
+                                state: { alerta: "warning", mensagem: "Usuário não possui permissão para essa solicitação!" }
                             }} />
                             :
                             <AuthenticatedChildren>
